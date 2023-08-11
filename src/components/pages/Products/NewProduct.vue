@@ -2,13 +2,7 @@
 	<div class="card">
 		<h5 slot="header" class="card-title">New product</h5>
 	<form>
-      <div class="row">
-        <div class="col-md-3">
-          <input type="text" class="form-control"
-                    label="name"
-                    placeholder="name"
-                    v-model="product.image"/>         
-        </div>
+      <div class="row">         
         <div class="col-md-3">
           <input type="text" class="form-control"
                     label="name"
@@ -16,15 +10,15 @@
                     v-model="product.name"/>         
         </div>
         <div class="col-md-4">
-          <input type="email" class="form-control"
-                    label="email"
-                    placeholder="email"
+          <input type="number" class="form-control"
+                    label="price"
+                    placeholder="price"
                     v-model="product.price"/>       
         </div>
         <div class="col-md-4">
           <input type="text" class="form-control"
-                    label="phone"
-                    placeholder="phone"
+                    label="description"
+                    placeholder="description"
                     v-model="product.description"/>
         </div>
       </div>       
@@ -48,7 +42,7 @@ let product = ref({
 	description: '',
 })
 
-function createUser(){
+function createProduct(){
       if(product.value.name != '' && product.value.price != '' && product.value.description != ''){
         axios.post('https://dummyjson.com/products',{
           body: product.value

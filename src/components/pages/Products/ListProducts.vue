@@ -1,7 +1,7 @@
 <template>
 <div class="card">
 	<div class="new-product">		
-		<button @click="$router.push('/list-products')">+Add Product</button>
+		<button @click="$router.push('/new-product')">+Add Product</button>
 	</div>
 
 		<table class="table table-hover">
@@ -48,7 +48,7 @@ function ListProducts(){
 				 axios.get('https://dummyjson.com/products?limit=3')
     				.then(res => {
        		products.value = res.data.products	
-       		console.log(products)
+       		console.log(products.value)
        		isLoading = true
      	})
  		}
@@ -97,12 +97,9 @@ function deleteProduct(userId){
 		}
 
 		th, td {
-			 border-bottom: 1px solid #dee2e6;
+			text-align: center;
+			border-bottom: 1px solid #dee2e6;
 		}	
-
-		td:last-child {
-			display: flex;
-		}
 
 			.delete {
 				margin-left: 10px;

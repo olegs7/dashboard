@@ -80,8 +80,6 @@ function deleteUser(userId){
 .card {
 	padding: 15px;
 
-	
-
 	.table  {
 		padding: 20px;
 
@@ -98,7 +96,8 @@ function deleteUser(userId){
 		}
 
 		th, td {
-			 border-bottom: 1px solid #dee2e6;
+			text-align: center;
+			border-bottom: 1px solid #dee2e6;
 		}	
 
 			.delete {
