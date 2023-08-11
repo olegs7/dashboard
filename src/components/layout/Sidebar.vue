@@ -16,15 +16,19 @@
     			<span class="material-icons">person</span>
     			<span class="text">Users</span>
     		</router-link>
+    		<router-link class="button" to="/list-products">
+    			<span class="material-icons">inventory_2</span>
+    			<span class="text">Products</span>
+    		</router-link>
     		<router-link class="button" to="/maps">
     			<span class="material-icons">map</span>
     			<span class="text">Map</span>
     		</router-link>
-    		<router-link class="button" to="">
+    		<router-link class="button" to="analytics">
     			<span class="material-icons">analytics</span>
     			<span class="text">Analitycs</span>
     		</router-link>
-    		<router-link class="button" to="">
+    		<router-link class="button" to="/price">
     			<span class="material-icons">payments</span>
     			<span class="text">Price</span>
     		</router-link>

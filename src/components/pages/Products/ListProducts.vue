@@ -1,27 +1,29 @@
 <template>
 <div class="card">
-	<div class="new-user">
-		<button @click="$router.push('/new-user')">+Add User</button>
+	<div class="new-product">		
+		<button @click="$router.push('/list-products')">+Add Product</button>
 	</div>
 
 		<table class="table table-hover">
 		<thead>
 				<tr>
+					<th>Image</th>
 					<th>Name</th>
-					<th>Email</th>
-					<th>Phone</th>
+					<th>Price</th>
+					<th>Description</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(user,index) in users">
-					<td>{{user.id}}. {{user.name}}</td>
-					<td>{{user.email}}</td>
-					<td>{{user.phone}}</td>
+				<tr v-for="(product,index) in products">
+					<td>img</td>
+					<td>{{product.id}}. {{product.title}}</td>
+					<td>{{product.price}}</td>
+					<td>{{product.description}}</td>
 					<td>
-						<router-link :to="`/edit/${user.id}`">
+						<router-link :to="`/edit-product/${product.id}`">
 							<span class="edit material-icons">edit</span>
 						</router-link>					
-						<span class="delete material-icons" @click='deleteUser(user.id)'>delete</span>
+						<span class="delete material-icons" @click='deleteProduct(product.id)'>delete</span>
 					</td>
 				</tr>
 			</tbody>
@@ -33,28 +35,28 @@
 
 <script setup>
 import {ref,onMounted} from 'vue' 
-import EditUser from './EditUser.vue'
+import EditProduct from './EditProduct.vue'
 import axios from 'axios'
 
-const users = ref([])	
+const products = ref([])	
 let isLoading = ref(false)
 
 onMounted(()=>{
-	ListUsers()
+	ListProducts()
 })
-
-function ListUsers(){
-				 axios.get('https://jsonplaceholder.typicode.com/users?_limit=3')
+function ListProducts(){
+				 axios.get('https://dummyjson.com/products?limit=3')
     				.then(res => {
-       		users.value = res.data 	
+       		products.value = res.data.products	
+       		console.log(products)
        		isLoading = true
      	})
  		}
-function deleteUser(userId){
+function deleteProduct(userId){
      	if(confirm('Delete this user?')){
-     		axios.delete(`https://jsonplaceholder.typicode.com/users/${userId}`)
+     		axios.delete(`https://dummyjson.com/products/${productId}`)
      			.then(res => {
-     				  ListUsers()  //update users
+     				  ListProducts()  //update products
      		 })
      			.catch(err => alert(err))
      	 }
@@ -62,11 +64,10 @@ function deleteUser(userId){
 </script>
 
 <style lang="scss" scoped>
-.new-user {
+.new-product {
 	display: flex;
 	align-items: center;
 	justify-content: end;
-
 
 	button {
 		font-size: 18px;
@@ -79,8 +80,6 @@ function deleteUser(userId){
 
 .card {
 	padding: 15px;
-
-	
 
 	.table  {
 		padding: 20px;
@@ -100,6 +99,10 @@ function deleteUser(userId){
 		th, td {
 			 border-bottom: 1px solid #dee2e6;
 		}	
+
+		td:last-child {
+			display: flex;
+		}
 
 			.delete {
 				margin-left: 10px;
