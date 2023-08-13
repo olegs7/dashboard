@@ -1,7 +1,7 @@
 <template>
 <div class="card">
 	<div class="new-product">		
-		<button @click="$router.push('/new-product')">+Add Product</button>
+		<button @click="$router.push('/admin/new-product')">+Add Product</button>
 	</div>
 
 		<table class="table table-hover">
@@ -20,7 +20,7 @@
 					<td>{{product.price}}</td>
 					<td>{{product.description}}</td>
 					<td>
-						<router-link :to="`/edit-product/${product.id}`">
+						<router-link :to="`/admin/edit-product/${product.id}`">
 							<span class="edit material-icons">edit</span>
 						</router-link>					
 						<span class="delete material-icons" @click='deleteProduct(product.id)'>delete</span>
@@ -48,7 +48,6 @@ function ListProducts(){
 				 axios.get('https://dummyjson.com/products?limit=3')
     				.then(res => {
        		products.value = res.data.products	
-       		console.log(products.value)
        		isLoading = true
      	})
  		}
@@ -96,10 +95,18 @@ function deleteProduct(userId){
 			box-shadow: none;
 		}
 
-		th, td {
-			text-align: center;
+		th {
+			// text-align: center;
 			border-bottom: 1px solid #dee2e6;
 		}	
+
+		td:last-child {
+			display: flex;
+		}
+
+		tbody tr {
+			border-bottom: 1px solid #dee2e6;
+		}
 
 			.delete {
 				margin-left: 10px;

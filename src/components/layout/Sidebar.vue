@@ -12,30 +12,30 @@
 
    <div class="menu-wrapper">
     	<div class="menu-main">
-    		<router-link class="button" to="/list-users">
+    		<router-link class="button" to="/admin/list-users">
     			<span class="material-icons">person</span>
     			<span class="text">Users</span>
     		</router-link>
-    		<router-link class="button" to="/list-products">
+    		<router-link class="button" to="/admin/list-products">
     			<span class="material-icons">inventory_2</span>
     			<span class="text">Products</span>
     		</router-link>
-    		<router-link class="button" to="/maps">
+    		<router-link class="button" to="/admin/maps">
     			<span class="material-icons">map</span>
     			<span class="text">Map</span>
     		</router-link>
-    		<router-link class="button" to="analytics">
+    		<router-link class="button" to="/admin/analytics">
     			<span class="material-icons">analytics</span>
     			<span class="text">Analitycs</span>
     		</router-link>
-    		<router-link class="button" to="/price">
+    		<router-link class="button" to="/admin/price">
     			<span class="material-icons">payments</span>
     			<span class="text">Price</span>
     		</router-link>
     	</div>
 
     	<div class='menu-main settings '>
-    		<router-link class="button" to="/settings">
+    		<router-link class="button" to="/admin/settings">
     			<span class="material-icons">settings</span>
     			<span class="text">Settings</span>
     		</router-link>
@@ -43,10 +43,17 @@
 	</div>
 
     </aside>
+
+    <div class="content">
+    	<TopNavbar/>
+    	<router-view></router-view>
+    </div>
+
 </template>
 
 
 <script setup>
+import TopNavbar from './TopNavbar.vue'	
 import {ref} from 'vue'
 
 const expanded = ref(false)
@@ -92,7 +99,6 @@ aside {
 				font-size: 2rem;
 				color: white;
 				transition: 0.2s ease-out;
-
 			}
 
 			&:hover {
@@ -176,7 +182,10 @@ aside {
 	img {
 		width: 2rem;
 	}
+}
 
-
+.content {
+	width: 100%;
+	padding: 15px;
 }
 </style>

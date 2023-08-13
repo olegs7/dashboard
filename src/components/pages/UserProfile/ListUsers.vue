@@ -1,7 +1,7 @@
 <template>
 <div class="card">
 	<div class="new-user">
-		<button @click="$router.push('/new-user')">+Add User</button>
+		<button @click="$router.push('/admin/new-user')">+Add User</button>
 	</div>
 
 		<table class="table table-hover">
@@ -18,7 +18,7 @@
 					<td>{{user.email}}</td>
 					<td>{{user.phone}}</td>
 					<td>
-						<router-link :to="`/edit/${user.id}`">
+						<router-link :to="`/admin/edit/${user.id}`">
 							<span class="edit material-icons">edit</span>
 						</router-link>					
 						<span class="delete material-icons" @click='deleteUser(user.id)'>delete</span>
@@ -96,7 +96,6 @@ function deleteUser(userId){
 		}
 
 		th, td {
-			text-align: center;
 			border-bottom: 1px solid #dee2e6;
 		}	
 

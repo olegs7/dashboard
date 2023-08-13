@@ -1,16 +1,10 @@
 <template>
   <div class="app">
-    <sidebar/>  
-    <div class="page">
-      <top-navbar></top-navbar>
-      <router-view></router-view>
-    </div>   
+     <router-view></router-view>
   </div>
 </template>
 
 <script setup>
-import Sidebar from './components/layout/Sidebar.vue'
-import TopNavbar from './components/layout/TopNavbar.vue'
 
 </script>
 
@@ -47,10 +41,5 @@ button {
   display: flex;
 
 }
-.page {
-  width: 100%;
-  padding: 15px;
-}
-
 </style>
 

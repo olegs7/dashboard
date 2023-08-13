@@ -17,39 +17,47 @@ import Settings from '../components/pages/Settings.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
+  routes: [ 
     {
-      path: '/maps',
-      component: Maps,
-    },
-    {
-      path: '/list-users',
-      component: ListUsers,
-    },
-    {
-      path: '/new-user',
-      component: NewUser,
-    },
-    {
-      path: '/edit/:id',
-      component: EditUser,
-    },
-    {
-      path: '/list-products',
-      component: ListProducts,
-    },
-    {
-      path: '/new-product',
-      component: NewProduct,
-    },
-    {
-      path: '/edit-product/:id',
-      component: EditProduct,
-    },
-    {
-      path: '/settings',
-      component: Settings,
-    },
+      path: '/admin',
+      component: Sidebar,
+      redirect: '/admin/list-users',
+      children:[
+        {
+          path: 'list-users',
+          component: ListUsers,
+        },
+        {
+          path: 'new-user',
+          component: NewUser,
+        },
+        {
+          path: 'edit/:id',
+          component: EditUser,
+        },
+        {
+          path: 'list-products',
+          component: ListProducts,
+        },
+        {
+          path: 'new-product',
+          component: NewProduct,
+        },
+        {
+          path: 'edit-product/:id',
+          component: EditProduct,
+        },
+        {
+          path: 'maps',
+          component: Maps,
+        },
+        {
+          path: 'settings',
+          component: Settings,
+        },
+      ]
+  },
+    
     
   ]
 })

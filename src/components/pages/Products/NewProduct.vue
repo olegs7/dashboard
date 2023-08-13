@@ -3,19 +3,19 @@
 		<h5 slot="header" class="card-title">New product</h5>
 	<form>
       <div class="row">         
-        <div class="col-md-3">
+        <div class="col-md-4">
           <input type="text" class="form-control"
                     label="name"
                     placeholder="name"
                     v-model="product.name"/>         
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
           <input type="number" class="form-control"
                     label="price"
                     placeholder="price"
                     v-model="product.price"/>       
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <input type="text" class="form-control"
                     label="description"
                     placeholder="description"
