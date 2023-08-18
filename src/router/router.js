@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import AdminLogin from '../components/layout/AdminLogin.vue'
 import Sidebar from '../components/layout/Sidebar.vue'
 
 // pages
@@ -18,6 +19,15 @@ import Settings from '../components/pages/Settings.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [ 
+    {
+      path: '/',
+      component: AdminLogin,
+      redirect: '/admin-login',
+    },
+    {
+      path: '/admin-login',
+      component: AdminLogin,
+    },
     {
       path: '/admin',
       component: Sidebar,

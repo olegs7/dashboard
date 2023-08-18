@@ -36,10 +36,5 @@ button {
   outline: 0;
   background: 0;
 } 
-
-.app {
-  display: flex;
-
-}
 </style>
 

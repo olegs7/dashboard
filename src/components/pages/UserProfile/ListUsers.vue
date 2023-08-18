@@ -32,9 +32,9 @@
 </template>
 
 <script setup>
-import {ref,onMounted} from 'vue' 
+import {ref,onMounted} from 'vue'
+import axios from 'axios' 
 import EditUser from './EditUser.vue'
-import axios from 'axios'
 
 const users = ref([])	
 let isLoading = ref(false)

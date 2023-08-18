@@ -1,5 +1,6 @@
 <template>
-    <aside :class="{expanded: expanded}">
+	<div class="wrapper-content">
+		 <aside :class="{expanded: expanded}">
     	<div class="logo">
     		<img src="#" alt="logo">
     	</div>
@@ -40,8 +41,8 @@
     			<span class="text">Settings</span>
     		</router-link>
     	</div>
-	</div>
 
+	</div>
     </aside>
 
     <div class="content">
@@ -49,6 +50,7 @@
     	<router-view></router-view>
     </div>
 
+	</div>
 </template>
 
 
@@ -61,11 +63,13 @@ const expanded = ref(false)
 const ToggleMenu = () => {
 	expanded.value = !expanded.value
 }
-
 </script>
 
 
 <style lang="scss" scoped>
+.wrapper-content {
+		display: flex;
+
 aside {
 	display: flex;
 	flex-direction: column;
@@ -184,8 +188,10 @@ aside {
 	}
 }
 
-.content {
-	width: 100%;
-	padding: 15px;
+  .content {
+	  width: 100%;
+	  padding: 15px;
+  }
+  
 }
 </style>
