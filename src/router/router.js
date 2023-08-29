@@ -66,9 +66,7 @@ const router = createRouter({
           component: Settings,
         },
       ]
-  },
-    
-    
+    },     
   ]
 })
 

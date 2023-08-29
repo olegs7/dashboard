@@ -1,12 +1,16 @@
 <template>
 <div class="card">
 	<div class="new-user">
-		<button @click="$router.push('/admin/new-user')">+Add User</button>
+		<button @click="$router.push('/admin/new-user')">
+			<span class="edit material-icons">add</span>New
+	</button>
 	</div>
 
 		<table class="table table-hover">
 		<thead>
 				<tr>
+					<th>Id</th>
+					<th>Photo</th>
 					<th>Name</th>
 					<th>Email</th>
 					<th>Phone</th>
@@ -14,7 +18,9 @@
 			</thead>
 			<tbody>
 				<tr v-for="(user,index) in users">
-					<td>{{user.id}}. {{user.name}}</td>
+					<td>{{user.id}}.</td>
+					<td>photo</td>
+					<td>{{user.name}}</td>
 					<td>{{user.email}}</td>
 					<td>{{user.phone}}</td>
 					<td>
@@ -25,60 +31,67 @@
 					</td>
 				</tr>
 			</tbody>
-			<div v-if="!isLoading">Loading...</div>
+			<div v-if="!store.state.isLoading">Loading...</div>
 	</table>
 </div>
 
 </template>
 
 <script setup>
-import {ref,onMounted} from 'vue'
+import { ref,onMounted,computed }  from 'vue'
 import axios from 'axios' 
+import { mapGetters,mapActions,mapMutations, useStore } from 'vuex'
 import EditUser from './EditUser.vue'
+import { baseUrl } from '@/config'
 
-const users = ref([])	
-let isLoading = ref(false)
+const store = useStore()
+const users = computed(()=>store.state.users)
+// const users = ref([])	
+// let isLoading = ref(false)
+
+// mapActions(['listUsers','deleteUser'])
+// mapGetters(['allUsers'])
 
 onMounted(()=>{
-	ListUsers()
+	store.dispatch('listUsers')
+	// listUsers()
 })
 
-function ListUsers(){
-				 axios.get('https://jsonplaceholder.typicode.com/users?_limit=3')
-    				.then(res => {
-       		users.value = res.data 	
-       		isLoading = true
-     	})
- 		}
 function deleteUser(userId){
-     	if(confirm('Delete this user?')){
-     		axios.delete(`https://jsonplaceholder.typicode.com/users/${userId}`)
-     			.then(res => {
-     				  ListUsers()  //update users
-     		 })
-     			.catch(err => alert(err))
-     	 }
-     }
+	store.dispatch('deleteUser',userId)
+}
+
+// async function listUsers(){
+// 				 let res = await axios.get(`${baseUrl}/users?_limit=3`)   			
+//        			users.value = res.data 	
+//        			isLoading = true	
+//  		}
+
+
+// function deleteUser(userId){
+//      	if(confirm('Delete this user?')){
+//      		axios.delete(`${baseUrl}/users/${userId}`)
+//      			.then(res => {
+//      				  listUsers()  //update users
+//      		 })
+//      			.catch(err => alert(err))
+//      	 }
+//      }
 </script>
 
 <style lang="scss" scoped>
 .new-user {
 	display: flex;
 	align-items: center;
-	justify-content: end;
-
 
 	button {
+		display: flex;
 		font-size: 18px;
-		background-color: green;
-		color: white;
-		border-radius: 5px;
-		padding: 3px 10px;
 	}
 }	
 
 .card {
-	padding: 15px;
+	padding: 20px;
 
 	.table  {
 		padding: 20px;
@@ -99,9 +112,9 @@ function deleteUser(userId){
 			border-bottom: 1px solid #dee2e6;
 		}	
 
-			.delete {
-				margin-left: 10px;
-				cursor: pointer;
+		.delete {
+			margin-left: 10px;
+			cursor: pointer;
 		}
 	}
 }

@@ -2,25 +2,25 @@
 <div class="wrapper">
     <div class="card">
         <form>
-        	<div class="login">LOGIN</div>
+        	<div class="login">Login</div>
             <div>
-                <label for="Email">
+                <label for="email">
                 	 <div>
                    		 <input type="email" class="form-control" 
-                   		 				id="Email"
-                   		 				v-model="email">
-                   		 <span :class="{dataInput: email}">Email</span>
+                   		 				id="email"
+                   		 				v-model="user.email">
+                   		 <span :class="{dataInput: user.email}">Email</span>
                    		 <div v-if="emailError" class="input-error">error login</div>
                		 </div>           			
                 </label>               
             </div>
             <div>
-                <label for="Password">
+                <label for="password">
                 	 <div>
                    		 <input type="password" class="form-control" 
-                   		 				id="Password"
-                   		 				v-model="password">
-                   	 	 <span :class="{dataInput: password}">Password</span>
+                   		 				id="password"
+                   		 				v-model="user.password">
+                   	 	 <span :class="{dataInput: user.password}">Password</span>
                    	 	 <div v-if="passwordError" class="input-error">error password</div>
                 	</div>
                 </label>               
@@ -28,7 +28,7 @@
             <div class="form-group">
                 <div class="button">
                     <button type="submit" class="btn btn-primary"
-                    @click.prevent="SignIn">Sign in</button>
+                    @click.prevent="signIn">Sign in</button>
                 </div>
             </div>
         </form>
@@ -38,24 +38,30 @@
 
 <script setup>
 import {ref} from 'vue'
-import { useRouter } from 'vue-router'
+import axios from 'axios'
+import {useRouter} from 'vue-router'
+import {baseUrl} from '@/config'
 
 const router = useRouter()
 
-const email = ref('admin@gmail.com')
-const password = ref('12345')
+let user = ref({
+	email: '',
+  password: '',
+})
 
 let emailError = ref(false)
 let passwordError = ref(false)
 
-function SignIn(){
-	if(email.value == 'admin@gmail.com' && password.value == '12345'){
-		router.push('/admin')
-	}else if(email.value !== 'admin@gmail.com'){
-		emailError.value = true
-	}else{
-		passwordError.value = true
-	}
+function signIn(){ 
+	axios.post(`${baseUrl}/login`,{
+		body: user.value
+	})
+		.then(res => {
+			if(typeof res.data.user !== 'undefined') {
+				router.push('/admin')
+		}
+	})
+		.catch(err => console.log(err))
 }
 </script>
 

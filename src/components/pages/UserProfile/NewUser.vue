@@ -1,7 +1,106 @@
 <template>
 	<div class="card">
 		<h5 slot="header" class="card-title">New user</h5>
-	<form>
+    <form>
+       <div class="form-group">
+        <label for="file">
+           <span class="file material-icons">account_circle</span>
+           <input type="file" class="form-control-file" 
+               id="file"
+              @change='uploadFile'>
+        </label>       
+      </div>
+
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-1 col-form-label">Name</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" 
+             id="inputEmail3" 
+             placeholder="name"
+             v-model='user.name'>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword3" class="col-sm-1 col-form-label">Email</label>
+    <div class="col-sm-5">
+      <input type="email" class="form-control"
+             id="inputPassword3" 
+             placeholder="email"
+             v-model='user.email'>
+    </div>
+  </div>
+   <div class="form-group row">
+    <label for="inputPassword3" class="col-sm-1 col-form-label">Phone</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control"
+             id="inputPassword3" 
+             placeholder="phone"
+             v-model='user.phone'>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-6">
+      <button type="submit" 
+              class="btn btn-primary"
+              @click.prevent='createUser'>Create user</button>
+    </div>
+  </div>
+    </form>
+	</div>
+
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import axios from 'axios'
+import { baseUrl } from '@/config'
+
+let user = ref({
+	name: '',
+	email: '',
+	phone: '',
+  file: ''
+})
+
+function uploadFile(){
+  user.file = file.files[0]
+  console.log(user.file)
+}
+
+function createUser(){
+      if(user.value.name != '' && user.value.email != '' && user.value.phone != ''){
+        let formData = new FormData()
+        formData.append('file',user.file)
+        console.log(formData)
+          axios.post(`${baseUrl}/users`,{
+            body: user.value,formData,
+            headers: {
+              'Content-Type': 'multipart/form-data'
+          }
+      })
+         .then(res => res)
+         .catch(err => alert(err)) 
+          user.value = file.value = ''  
+      }
+    }
+</script>
+
+<style lang="scss" scoped>
+.card	{
+	padding: 15px;
+
+  .file {
+    font-size: 30px;
+  }
+
+  .col-sm-1 {
+    max-width: none;
+  }
+}
+</style>
+
+  <!-- <form>
       <div class="row">
         <div class="col-md-4">
           <input type="text" class="form-control"
@@ -28,38 +127,4 @@
                 @click.prevent="createUser"> Create user
         </button>
       </div>
-    </form>
-	</div>
-</template>
-
-<script setup>
-import { ref } from 'vue'
-import axios from 'axios'
-
-let user = ref({
-	name: '',
-	email: '',
-	phone: '',
-})
-
-function createUser(){
-      if(user.value.name != '' && user.value.email != '' && user.value.phone != ''){
-        axios.post('https://jsonplaceholder.typicode.com/users',{
-          body: user.value
-      })
-         .then(res => res)
-         .catch(err => alert(err)) 
-          user.value = ''  
-      }
-    }
-</script>
-
-<style lang="scss" scoped>
-.card	{
-	padding: 15px;
-
-	.button-update {
-  	margin-top: 10px;
- }
-}
-</style>
+    </form> -->

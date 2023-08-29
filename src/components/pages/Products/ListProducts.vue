@@ -1,12 +1,15 @@
 <template>
 <div class="card">
 	<div class="new-product">		
-		<button @click="$router.push('/admin/new-product')">+Add Product</button>
+		<button @click="$router.push('/admin/new-product')">
+		<span class="edit material-icons">add</span>New
+	</button>
 	</div>
 
 		<table class="table table-hover">
 		<thead>
 				<tr>
+					<th>Id</th>
 					<th>Image</th>
 					<th>Name</th>
 					<th>Price</th>
@@ -15,9 +18,10 @@
 			</thead>
 			<tbody>
 				<tr v-for="(product,index) in products">
-					<td>img</td>
-					<td>{{product.id}}. {{product.title}}</td>
-					<td>{{product.price}}</td>
+					<td>{{product.id}}. </td>
+					<td><img class="img" :src="product.images[0]"></td>
+					<td>{{product.title}}</td>
+					<td>{{product.price}}$</td>
 					<td>{{product.description}}</td>
 					<td>
 						<router-link :to="`/admin/edit-product/${product.id}`">
@@ -37,25 +41,29 @@
 import {ref,onMounted} from 'vue' 
 import EditProduct from './EditProduct.vue'
 import axios from 'axios'
+import {urlProducts} from '@/config'
 
-const products = ref([])	
+const products = ref([])
 let isLoading = ref(false)
 
+
 onMounted(()=>{
-	ListProducts()
+	listProducts()
 })
-function ListProducts(){
-				 axios.get('https://dummyjson.com/products?limit=3')
+
+function listProducts(){
+				 axios.get(`${urlProducts}?limit=3`)
     				.then(res => {
        		products.value = res.data.products	
        		isLoading = true
      	})
  		}
-function deleteProduct(userId){
+ 		
+function deleteProduct(productId){
      	if(confirm('Delete this user?')){
-     		axios.delete(`https://dummyjson.com/products/${productId}`)
+     		axios.delete(`${urlProducts}/${productId}`)
      			.then(res => {
-     				  ListProducts()  //update products
+     				  listProducts()  //update products
      		 })
      			.catch(err => alert(err))
      	 }
@@ -66,19 +74,15 @@ function deleteProduct(userId){
 .new-product {
 	display: flex;
 	align-items: center;
-	justify-content: end;
 
 	button {
+		display: flex;
 		font-size: 18px;
-		background-color: green;
-		color: white;
-		border-radius: 5px;
-		padding: 3px 10px;
 	}
 }	
 
 .card {
-	padding: 15px;
+	padding: 20px;
 
 	.table  {
 		padding: 20px;
@@ -106,6 +110,11 @@ function deleteProduct(userId){
 
 		tbody tr {
 			border-bottom: 1px solid #dee2e6;
+		}
+
+		.img {
+			width: 100px;
+			height: 100px;
 		}
 
 			.delete {

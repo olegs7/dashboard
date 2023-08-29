@@ -1,7 +1,57 @@
 <template>
 	<div class="card">
-		<h4 slot="header" class="card-title">Edit user</h4>
-	<form>
+		<h5 slot="header" class="card-title">Edit user</h5>
+      <form>
+       <div class="form-group">
+        <label for="file">
+           <span class="file material-icons">account_circle</span>
+           <input type="file" class="form-control-file" 
+               id="file"
+               name='files'
+              @change='uploadFile'>
+        </label>       
+      </div>
+
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-1 col-form-label">Name</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" 
+             id="inputEmail3" 
+             placeholder="name"
+             v-model='user.name'>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword3" class="col-sm-1 col-form-label">Email</label>
+    <div class="col-sm-5">
+      <input type="email" class="form-control"
+             id="inputPassword3" 
+             placeholder="email"
+             v-model='user.email'>
+    </div>
+  </div>
+   <div class="form-group row">
+    <label for="inputPassword3" class="col-sm-1 col-form-label">Phone</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control"
+             id="inputPassword3" 
+             placeholder="phone"
+             v-model='user.phone'>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-6">
+      <button type="submit" 
+              class="btn btn-primary"
+              @click.prevent='updateUser'>Update</button>
+    </div>
+  </div>
+    </form>
+
+
+
+	<!-- <form>
       <div class="row">
         <div class="col-md-4">
           <input type="text" class="form-control"
@@ -29,7 +79,7 @@
                 @click.prevent="updateUser"> Update user
         </button>
       </div>
-    </form>
+    </form> -->
 	</div>
 
 </template>
@@ -38,6 +88,7 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
+import {baseUrl} from '@/config'
 
 const route = useRoute()
 
@@ -54,13 +105,13 @@ onMounted(()=>{
 })
 
 function getUser(userId){
-        axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`)
-            .then(res => {
+        axios.get(`${baseUrl}/users/${userId}`)
+          .then(res => {
             user.value = res.data 
         })
       }
 function updateUser(){
-        axios.put(`https://jsonplaceholder.typicode.com/users/${userId}`,user)
+        axios.put(`${baseUrl}/users/${userId}`,user)
           .then(res => res.data)
           .catch(err => alert(err))
       }
@@ -68,7 +119,7 @@ function updateUser(){
 
 <style lang="scss" scoped>
 .card	{
-	padding: 15px;
+	padding: 20px;
 	
 .button-update {
 	margin-top: 10px;
