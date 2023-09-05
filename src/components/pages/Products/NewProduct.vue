@@ -44,7 +44,7 @@
     <div class="col-sm-6">
       <button type="submit" 
               class="btn btn-primary"
-              @click.prevent='createUser'>Create user</button>
+              @click.prevent='createUser'>Add product</button>
     </div>
   </div>
     </form>

@@ -2,8 +2,8 @@
 <div class="card">
 	<div class="new-product">		
 		<button @click="$router.push('/admin/new-product')">
-		<span class="edit material-icons">add</span>New
-	</button>
+			<span class="edit material-icons">add</span>New
+		</button>
 	</div>
 
 		<table class="table table-hover">
@@ -31,43 +31,30 @@
 					</td>
 				</tr>
 			</tbody>
-			<div v-if="!isLoading">Loading...</div>
+			<div v-if="!store.state.isLoading">Loading...</div>
 	</table>
 </div>
 
 </template>
 
 <script setup>
-import {ref,onMounted} from 'vue' 
 import EditProduct from './EditProduct.vue'
+import { ref,onMounted,computed } from 'vue' 
 import axios from 'axios'
-import {urlProducts} from '@/config'
+import { useStore } from 'vuex'
+import { urlProducts } from '@/config'
 
-const products = ref([])
-let isLoading = ref(false)
-
+const store = useStore()
+const products = computed(() => store.state.products)
 
 onMounted(()=>{
-	listProducts()
+	store.dispatch('listProducts',5)
 })
 
-function listProducts(){
-				 axios.get(`${urlProducts}?limit=3`)
-    				.then(res => {
-       		products.value = res.data.products	
-       		isLoading = true
-     	})
- 		}
- 		
 function deleteProduct(productId){
-     	if(confirm('Delete this user?')){
-     		axios.delete(`${urlProducts}/${productId}`)
-     			.then(res => {
-     				  listProducts()  //update products
-     		 })
-     			.catch(err => alert(err))
-     	 }
-     }
+	store.dispatch('deleteProduct',productId)
+}
+
 </script>
 
 <style lang="scss" scoped>

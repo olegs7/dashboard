@@ -37,10 +37,10 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import { ref } from 'vue'
 import axios from 'axios'
-import {useRouter} from 'vue-router'
-import {baseUrl} from '@/config'
+import { useRouter } from 'vue-router'
+import { baseUrl } from '@/config'
 
 const router = useRouter()
 

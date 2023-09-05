@@ -42,6 +42,7 @@
 
 <style lang="scss" scoped>
 .navbar {
+  padding: 0;
 	margin-bottom: 15px;
 
 .btn-outline-success {

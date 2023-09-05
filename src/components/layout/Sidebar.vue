@@ -6,7 +6,7 @@
     	</div>
 
     	<div class="menu">
-    		<button class="menu-toggle" @click='ToggleMenu'>
+    		<button class="menu-toggle" @click='toggleMenu'>
     			<span class="material-icons">keyboard_double_arrow_right</span>
     		</button>
     	</div>
@@ -21,15 +21,15 @@
     			<span class="material-icons">inventory_2</span>
     			<span class="text">Products</span>
     		</router-link>
-    		<router-link class="button" to="/admin/maps">
+    		<router-link class="button" to="#">
     			<span class="material-icons">map</span>
     			<span class="text">Map</span>
     		</router-link>
-    		<router-link class="button" to="/admin/analytics">
+    		<router-link class="button" to="#">
     			<span class="material-icons">analytics</span>
     			<span class="text">Analitycs</span>
     		</router-link>
-    		<router-link class="button" to="/admin/price">
+    		<router-link class="button" to="#">
     			<span class="material-icons">payments</span>
     			<span class="text">Price</span>
     		</router-link>
@@ -41,11 +41,10 @@
     			<span class="text">Settings</span>
     		</router-link>
     	</div>
+		</div>
+     </aside>
 
-	</div>
-    </aside>
-
-    <div class="content">
+    <div class="content" :class="{expanded: expanded}">
     	<TopNavbar/>
     	<router-view></router-view>
     </div>
@@ -56,11 +55,11 @@
 
 <script setup>
 import TopNavbar from './TopNavbar.vue'	
-import {ref} from 'vue'
+import { ref } from 'vue'
 
 const expanded = ref(false)
 
-const ToggleMenu = () => {
+const toggleMenu = () => {
 	expanded.value = !expanded.value
 }
 </script>
@@ -73,10 +72,11 @@ const ToggleMenu = () => {
 aside {
 	display: flex;
 	flex-direction: column;
+	position: fixed;
 	width: calc(2rem + 32px);
-	min-height: 100vh;
+	height: 100%;
 	padding: 1rem;
-	overflow: hidden;
+	z-index: 10;
 
 	background-color: var(--dark);
 	color: var(--light);
@@ -119,7 +119,6 @@ aside {
 		flex-direction: column;
 		justify-content: space-between;
 		height: 100%;
-
 	}
 
 	.button .text {
@@ -190,8 +189,13 @@ aside {
 
   .content {
 	  width: 100%;
+	  margin-left: 64px;
 	  padding: 15px;
+
+	  &.expanded {
+	  	margin-left: 300px;
+	  }
   }
-  
+
 }
 </style>

@@ -4,7 +4,6 @@ import AdminLogin from '../components/layout/AdminLogin.vue'
 import Sidebar from '../components/layout/Sidebar.vue'
 
 // pages
-import Maps from '../components/pages/Maps.vue'
 import ListUsers from '../components/pages/UserProfile/ListUsers.vue'
 import NewUser from '../components/pages/UserProfile/NewUser.vue'
 import EditUser from '../components/pages/UserProfile/EditUser.vue'
@@ -13,6 +12,8 @@ import ListProducts from '../components/pages/Products/ListProducts.vue'
 import NewProduct from '../components/pages/Products/NewProduct.vue'
 import EditProduct from '../components/pages/Products/EditProduct.vue'
 
+import Maps from '../components/pages/Maps.vue'
+import Price from '../components/pages/Price.vue'
 import Settings from '../components/pages/Settings.vue'
 
 
@@ -60,6 +61,10 @@ const router = createRouter({
         {
           path: 'maps',
           component: Maps,
+        },
+        {
+          path: 'price',
+          component: Price,
         },
         {
           path: 'settings',

@@ -43,7 +43,7 @@
     <div class="col-sm-6">
       <button type="submit" 
               class="btn btn-primary"
-              @click.prevent='createUser'>Create user</button>
+              @click.prevent='createUser'>Add user</button>
     </div>
   </div>
     </form>
@@ -65,18 +65,17 @@ let user = ref({
 
 function uploadFile(){
   user.file = file.files[0]
-  console.log(user.file)
 }
 
 function createUser(){
       if(user.value.name != '' && user.value.email != '' && user.value.phone != ''){
         let formData = new FormData()
-        formData.append('file',user.file)
-        console.log(formData)
+        formData.append('file',user.file.name)
+        console.log(formData.get('file'))
           axios.post(`${baseUrl}/users`,{
             body: user.value,formData,
             headers: {
-              'Content-Type': 'multipart/form-data'
+              'Content-Type': 'multipart/form-data',
           }
       })
          .then(res => res)

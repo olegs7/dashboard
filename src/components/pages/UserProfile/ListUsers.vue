@@ -38,10 +38,10 @@
 </template>
 
 <script setup>
+import EditUser from './EditUser.vue'
 import { ref,onMounted,computed }  from 'vue'
 import axios from 'axios' 
-import { mapGetters,mapActions,mapMutations, useStore } from 'vuex'
-import EditUser from './EditUser.vue'
+import { useStore } from 'vuex'
 import { baseUrl } from '@/config'
 
 const store = useStore()
@@ -49,12 +49,8 @@ const users = computed(()=>store.state.users)
 // const users = ref([])	
 // let isLoading = ref(false)
 
-// mapActions(['listUsers','deleteUser'])
-// mapGetters(['allUsers'])
-
 onMounted(()=>{
-	store.dispatch('listUsers')
-	// listUsers()
+	store.dispatch('listUsers',3)
 })
 
 function deleteUser(userId){
