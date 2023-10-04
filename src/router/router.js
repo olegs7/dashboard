@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import AdminLogin from '../components/layout/AdminLogin.vue'
+import AdminLogin from '../components/pages/AdminLogin.vue'
 import Sidebar from '../components/layout/Sidebar.vue'
 
 // pages
@@ -14,6 +14,7 @@ import EditProduct from '../components/pages/Products/EditProduct.vue'
 
 import Maps from '../components/pages/Maps.vue'
 import Price from '../components/pages/Price.vue'
+import Analytics from '../components/pages/Analytics.vue'
 import Settings from '../components/pages/Settings.vue'
 
 
@@ -61,6 +62,10 @@ const router = createRouter({
         {
           path: 'maps',
           component: Maps,
+        },
+        {
+          path: 'analytics',
+          component: Analytics,
         },
         {
           path: 'price',

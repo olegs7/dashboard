@@ -1,5 +1,9 @@
 <template>
-	<h4>Price</h4>
+	<div class="card">
+			<div class="price">
+			<h5>Price</h5>
+		</div>
+	</div>	
 </template>
 
 <script setup>

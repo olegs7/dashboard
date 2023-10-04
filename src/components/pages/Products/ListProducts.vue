@@ -45,7 +45,7 @@ import { useStore } from 'vuex'
 import { urlProducts } from '@/config'
 
 const store = useStore()
-const products = computed(() => store.state.products)
+const products = computed(() => store.state.products.products)
 
 onMounted(()=>{
 	store.dispatch('listProducts',5)
@@ -58,56 +58,5 @@ function deleteProduct(productId){
 </script>
 
 <style lang="scss" scoped>
-.new-product {
-	display: flex;
-	align-items: center;
 
-	button {
-		display: flex;
-		font-size: 18px;
-	}
-}	
-
-.card {
-	padding: 20px;
-
-	.table  {
-		padding: 20px;
-
-		thead tr th {
-			font-size: 14px;
-			font-weight: 400;
-			text-transform: uppercase;
-	  	color: #9A9A9A;
-		}
-
-		tbody, td, tfoot, th, thead, tr {
-			border-style: none;
-			box-shadow: none;
-		}
-
-		th {
-			// text-align: center;
-			border-bottom: 1px solid #dee2e6;
-		}	
-
-		td:last-child {
-			display: flex;
-		}
-
-		tbody tr {
-			border-bottom: 1px solid #dee2e6;
-		}
-
-		.img {
-			width: 100px;
-			height: 100px;
-		}
-
-			.delete {
-				margin-left: 10px;
-				cursor: pointer;
-		}
-	}
-}
 </style>

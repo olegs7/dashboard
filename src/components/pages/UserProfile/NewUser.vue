@@ -70,10 +70,10 @@ function uploadFile(){
 function createUser(){
       if(user.value.name != '' && user.value.email != '' && user.value.phone != ''){
         let formData = new FormData()
-        formData.append('file',user.file.name)
-        console.log(formData.get('file'))
-          axios.post(`${baseUrl}/users`,{
-            body: user.value,formData,
+        formData.append('file',user.file)
+        formData.append('email',user.value.email)
+        formData.append('phone',user.value.phone)
+          axios.post(`${baseUrl}/users`,formData,{
             headers: {
               'Content-Type': 'multipart/form-data',
           }
@@ -98,32 +98,3 @@ function createUser(){
   }
 }
 </style>
-
-  <!-- <form>
-      <div class="row">
-        <div class="col-md-4">
-          <input type="text" class="form-control"
-                    label="name"
-                    placeholder="name"
-                    v-model="user.name"/>         
-        </div>
-        <div class="col-md-4">
-          <input type="email" class="form-control"
-                    label="email"
-                    placeholder="email"
-                    v-model="user.email"/>       
-        </div>
-        <div class="col-md-4">
-          <input type="text" class="form-control"
-                    label="phone"
-                    placeholder="phone"
-                    v-model="user.phone"/>
-        </div>
-      </div>       
-      <div class="button-update">
-        <button type="submit" 
-                class="btn btn-info btn-fill float-right"
-                @click.prevent="createUser"> Create user
-        </button>
-      </div>
-    </form> -->

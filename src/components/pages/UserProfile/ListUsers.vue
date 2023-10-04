@@ -1,9 +1,9 @@
 <template>
 <div class="card">
 	<div class="new-user">
-		<button @click="$router.push('/admin/new-user')">
+		<div @click="$router.push('/admin/new-user')">
 			<span class="edit material-icons">add</span>New
-	</button>
+	</div>
 	</div>
 
 		<table class="table table-hover">
@@ -22,19 +22,27 @@
 					<td>photo</td>
 					<td>{{user.name}}</td>
 					<td>{{user.email}}</td>
-					<td>{{user.phone}}</td>
+					<!-- <td>{{user.phone}}</td> -->
 					<td>
-						<router-link :to="`/admin/edit/${user.id}`">
-							<span class="edit material-icons">edit</span>
-						</router-link>					
-						<span class="delete material-icons" @click='deleteUser(user.id)'>delete</span>
+						<router-link :to="`/admin/edit/${user.id}`">	
+							<div class="block-edit">
+								<span class="edit material-icons">edit</span>
+							  <span>EDIT</span>				
+							</div>							 
+						</router-link>	
 					</td>
+					<td>
+						<div class="block-delete">
+							<span class="delete material-icons" @click='deleteUser(user.id)'>delete</span>						 
+						</div>					
+					</td>						
 				</tr>
 			</tbody>
 			<div v-if="!store.state.isLoading">Loading...</div>
 	</table>
 </div>
-
+<div>
+</div>
 </template>
 
 <script setup>
@@ -45,9 +53,7 @@ import { useStore } from 'vuex'
 import { baseUrl } from '@/config'
 
 const store = useStore()
-const users = computed(()=>store.state.users)
-// const users = ref([])	
-// let isLoading = ref(false)
+const users = computed(()=>store.state.users.users)
 
 onMounted(()=>{
 	store.dispatch('listUsers',3)
@@ -57,61 +63,8 @@ function deleteUser(userId){
 	store.dispatch('deleteUser',userId)
 }
 
-// async function listUsers(){
-// 				 let res = await axios.get(`${baseUrl}/users?_limit=3`)   			
-//        			users.value = res.data 	
-//        			isLoading = true	
-//  		}
-
-
-// function deleteUser(userId){
-//      	if(confirm('Delete this user?')){
-//      		axios.delete(`${baseUrl}/users/${userId}`)
-//      			.then(res => {
-//      				  listUsers()  //update users
-//      		 })
-//      			.catch(err => alert(err))
-//      	 }
-//      }
 </script>
 
 <style lang="scss" scoped>
-.new-user {
-	display: flex;
-	align-items: center;
 
-	button {
-		display: flex;
-		font-size: 18px;
-	}
-}	
-
-.card {
-	padding: 20px;
-
-	.table  {
-		padding: 20px;
-
-		thead tr th {
-			font-size: 14px;
-			font-weight: 400;
-			text-transform: uppercase;
-	  	color: #9A9A9A;
-		}
-
-		tbody, td, tfoot, th, thead, tr {
-			border-style: none;
-			box-shadow: none;
-		}
-
-		th, td {
-			border-bottom: 1px solid #dee2e6;
-		}	
-
-		.delete {
-			margin-left: 10px;
-			cursor: pointer;
-		}
-	}
-}
 </style>

@@ -50,7 +50,7 @@
 	border-color: #17a2b8;
 
 		&:hover {
-			color: white;
+			color: var(--light);
 			background-color: #17a2b8;
 		}
 	}
