@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-import { baseUrl,urlProducts } from '@/config'
+import { baseUrl } from '@/config'
 import users from './modules/users.js'
 import products from './modules/products.js'
 

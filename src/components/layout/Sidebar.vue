@@ -2,8 +2,7 @@
 	<div class="wrapper-content">
 		 <aside :class="{expanded: expanded}">
     	<div class="logo">
-    		<!-- <img src="#" alt="logo"> -->
-    		Admin dashboard
+    		<img src="@/assets/logo.svg" alt="logo">
     	</div>
 
     	<div class="menu">

@@ -1,11 +1,12 @@
 <template>
 	<div class="card">
-		<h5 slot="header" class="card-title">New user</h5>
+    <div class="title">
+      <h5 slot="header" class="card-title">New user</h5>
+    </div>	
     <form>
        <div class="form-group">
         <label for="file">
-           <span class="file material-icons">account_circle</span>
-           <input type="file" class="form-control-file" 
+           <input type="file" name='file' class="form-control-file" 
                id="file"
               @change='uploadFile'>
         </label>       
@@ -32,7 +33,7 @@
    <div class="form-group row">
     <label for="inputPassword3" class="col-sm-1 col-form-label">Phone</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control"
+      <input type="number" class="form-control"
              id="inputPassword3" 
              placeholder="phone"
              v-model='user.phone'>
@@ -54,47 +55,57 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
 import { baseUrl } from '@/config'
 
+const router = useRouter()
+
 let user = ref({
+  file: '',
 	name: '',
 	email: '',
 	phone: '',
-  file: ''
 })
 
 function uploadFile(){
-  user.file = file.files[0]
+  user.value.file = file.files[0]
 }
 
 function createUser(){
       if(user.value.name != '' && user.value.email != '' && user.value.phone != ''){
         let formData = new FormData()
-        formData.append('file',user.file)
-        formData.append('email',user.value.email)
-        formData.append('phone',user.value.phone)
-          axios.post(`${baseUrl}/users`,formData,{
-            headers: {
-              'Content-Type': 'multipart/form-data',
-          }
-      })
-         .then(res => res)
-         .catch(err => alert(err)) 
-          user.value = file.value = ''  
+        const { file,name,email,phone } = user.value
+          formData.append('file',file)
+          formData.append('name',name)
+          formData.append('email',email)
+          formData.append('phone',phone)
+           axios.post(`${baseUrl}/users`,formData,{
+              headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        })
+          .then(res => res)
+            user.value = ''
+            router.push('/admin/list-users')
+          .catch(err => alert(err)) 
       }
     }
+
 </script>
 
 <style lang="scss" scoped>
 .card	{
 	padding: 15px;
 
-  .file {
-    font-size: 30px;
+  .title {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 30px;
   }
 
   .col-sm-1 {
     max-width: none;
   }
+
 }
 </style>

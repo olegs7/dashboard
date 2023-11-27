@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { baseUrl,urlProducts } from '@/config'
+import { baseUrl } from '@/config'
 
 export default {
 	state: {
@@ -12,24 +12,15 @@ export default {
 		}
 	},
 	actions: {
-		listProducts({commit},limit){
-				 axios.get(`${urlProducts}?limit=${limit}`)
-    				.then(res => {
-       		commit('updateProducts',res.data.products)		
+		async listProducts({commit}){
+				 let res = await axios.get(`${baseUrl}/products`) 
+       		commit('updateProducts',res.data)
        		this.state.isLoading = true
-     	})
- 		},
- 		deleteProduct({commit},productId){
-     	if(confirm('Delete this user?')){
-     		axios.delete(`${urlProducts}/${productId}`)
-     			.then(res => {
-     				  commit('updateProducts')  //update products
-     		 })
-     			.catch(err => alert(err))
-     	 }
-     }
+ 		}
 	},
 	getters: {
-		
+		allProducts(state){
+			return state.products
+		}
 	}
 }

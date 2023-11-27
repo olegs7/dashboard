@@ -4,10 +4,9 @@
      <form>
        <div class="form-group">
         <label for="file">
-           <img class="img" :src="product.images[0]">
            <input type="file" class="form-control-file" 
                id="file"
-               name='files'
+               name='file'
               @change='uploadFile'>
         </label>       
       </div>
@@ -18,11 +17,11 @@
       <input type="text" class="form-control" 
              id="inputEmail3" 
              placeholder="name"
-             v-model='product.title'>
+             v-model='product.name'>
     </div>
   </div>
   <div class="form-group row">
-    <label for="inputPassword3" class="col-sm-1 col-form-label">Email</label>
+    <label for="inputPassword3" class="col-sm-1 col-form-label">Price</label>
     <div class="col-sm-5">
       <input type="number" class="form-control"
              id="inputPassword3" 
@@ -31,7 +30,7 @@
     </div>
   </div>
    <div class="form-group row">
-    <label for="inputPassword3" class="col-sm-1 col-form-label">Phone</label>
+    <label for="inputPassword3" class="col-sm-1 col-form-label">Description</label>
     <div class="col-sm-5">
       <input type="text" class="form-control"
              id="inputPassword3" 
@@ -55,34 +54,46 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import { useRoute } from 'vue-router'
-import {urlProducts} from '@/config'
+import { useRoute,useRouter } from 'vue-router'
+import { baseUrl } from '@/config'
 
 const route = useRoute()
+const router = useRouter()
 
 let productId = ''
 let product = ref({
-  images: '',
-	title: '',
+  file: '',
+	name: '',
 	price: '',
 	description: '',
 })
 
+function uploadFile(){
+  product.value.file = file.files[0]
+}
+
 onMounted(()=>{
 	productId = route.params.id
-	getProduct(route.params.id)
+	getProduct(productId)
 })
 
 function getProduct(productId){
-        axios.get(`${urlProducts}/${productId}`)
-            .then(res => {
-            product.value = res.data 
+        axios.get(`${baseUrl}/products/${productId}`)
+          .then(res => {
+            let {name,price,description} = res.data
+           product.value = {name,price,description}
         })
       }
+
 function updateProduct(){
-        axios.put(`${urlProducts}/${productId}`,product)
-          .then(res => res.data)
-          .catch(err => alert(err))
+        axios.put(`${baseUrl}/products/${productId}`,product.value,{
+          headers: {
+              'Content-Type': 'multipart/form-data',
+          }
+        })
+          .then(res => console.log(res))
+            router.push('/admin/list-products') 
+          .catch(err => console.log(err))
       }
 </script>
 
@@ -94,6 +105,10 @@ function updateProduct(){
       width: 100px;
       height: 100px;
       margin-bottom: 10px;
+    }
+
+    .col-sm-1 {
+      max-width: none;
     }
 	
 .button-update {

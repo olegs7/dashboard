@@ -1,10 +1,9 @@
 import axios from 'axios'
-import { baseUrl,urlProducts } from '@/config'
+import { baseUrl } from '@/config'
 
 export default {
 	state: {
 		users: [],
-		products: [],
 		isLoading: false
 	},
 	mutations: {
@@ -13,21 +12,11 @@ export default {
 		}
 	},
 	actions: {
-		async listUsers({commit},limit){
-				 let res = await axios.get(`${baseUrl}/users?_limit=${limit}`)   			
-       			commit('updateUsers',res.data)	
-       			this.state.isLoading = true     			
- 		},
- 		deleteUser({commit},userId){
-     	if(confirm('Delete this user?')){
-     		axios.delete(`${baseUrl}/users/${userId}`)
-     			.then(res => {
-     				   commit('updateUsers')
-     		 })
-     			.catch(err => alert(err))
-     	 }
-     },
-     
+		async listUsers({commit}){
+				let res = await axios.get(`${baseUrl}/users`)  			
+       		commit('updateUsers',res.data)	
+       		this.state.isLoading = true     			
+ 		}	 
 	},
 	getters: {
 		allUsers(state){

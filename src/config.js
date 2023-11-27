@@ -1,5 +1,4 @@
-export const baseUrl = 'https://jsonplaceholder.typicode.com'
-export const urlProducts = 'https://dummyjson.com/products'
+export const baseUrl = 'http://localhost:3000'
 
 
 

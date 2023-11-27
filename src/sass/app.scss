@@ -6,6 +6,12 @@
   outline: none !important;
 }
 
+a,ul {
+  color: inherit;
+  text-decoration: none;
+  list-style-type: none;
+}
+
 body {
   background: var(--light);
 }

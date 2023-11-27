@@ -1,12 +1,12 @@
 <template>
 <div class="card">
 	<div class="new-product">		
-		<button @click="$router.push('/admin/new-product')">
-			<span class="edit material-icons">add</span>New
-		</button>
+		<div class="new-product__router" @click="$router.push('/admin/new-product')">
+			<span class="material-icons">add</span>NEW
+		</div>
 	</div>
 
-		<table class="table table-hover">
+		<table class="table-products table-hover">
 		<thead>
 				<tr>
 					<th>Id</th>
@@ -18,16 +18,21 @@
 			</thead>
 			<tbody>
 				<tr v-for="(product,index) in products">
-					<td>{{product.id}}. </td>
-					<td><img class="img" :src="product.images[0]"></td>
-					<td>{{product.title}}</td>
+					<td>{{index + 1}}.</td>
+					<td><img class="img" :src="`${baseUrl}/`+ product.file" alt=""></td>
+					<td>{{product.name}}</td>
 					<td>{{product.price}}$</td>
 					<td>{{product.description}}</td>
 					<td>
-						<router-link :to="`/admin/edit-product/${product.id}`">
-							<span class="edit material-icons">edit</span>
-						</router-link>					
-						<span class="delete material-icons" @click='deleteProduct(product.id)'>delete</span>
+						<div class="block-edit">
+							<router-link :to="`/admin/edit-product/${product._id}`">							
+								<span class="edit material-icons">edit</span>
+							  <span>EDIT</span>		
+							</router-link>		
+						</div>							 						
+						<div class="block-delete">
+							<span class="delete" @click='deleteProduct(product._id)'>DELETE</span>						 
+						</div>										
 					</td>
 				</tr>
 			</tbody>
@@ -42,18 +47,26 @@ import EditProduct from './EditProduct.vue'
 import { ref,onMounted,computed } from 'vue' 
 import axios from 'axios'
 import { useStore } from 'vuex'
-import { urlProducts } from '@/config'
+import { baseUrl } from '@/config'
 
 const store = useStore()
 const products = computed(() => store.state.products.products)
 
 onMounted(()=>{
-	store.dispatch('listProducts',5)
+	store.dispatch('listProducts')
 })
 
+// function deleteProduct(productId){
+// 	store.dispatch('deleteProduct',productId)
+// }
+
 function deleteProduct(productId){
-	store.dispatch('deleteProduct',productId)
-}
+     	if(confirm('Delete this user?')){
+     		axios.delete(`${baseUrl}/products/${productId}`)
+     			.then(res => res)
+     			.catch(err => alert(err))
+     	 }
+     }
 
 </script>
 
