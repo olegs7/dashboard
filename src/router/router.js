@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import AdminLogin from '../components/pages/AdminLogin.vue'
-import Sidebar from '../components/layout/Sidebar.vue'
+import Content from '../components/layout/Content.vue'
 
 // pages
 import ListUsers from '../components/pages/UserProfile/ListUsers.vue'
@@ -12,7 +12,8 @@ import ListProducts from '../components/pages/Products/ListProducts.vue'
 import NewProduct from '../components/pages/Products/NewProduct.vue'
 import EditProduct from '../components/pages/Products/EditProduct.vue'
 
-import Maps from '../components/pages/Maps.vue'
+import Orders from '@/components/pages/orders/Orders.vue'
+import UserOrders from '@/components/pages/orders/UserOrders.vue'
 import Price from '../components/pages/Price.vue'
 import Analytics from '../components/pages/Analytics.vue'
 import Settings from '../components/pages/Settings.vue'
@@ -32,7 +33,7 @@ const router = createRouter({
     },
     {
       path: '/admin',
-      component: Sidebar,
+      component: Content,
       redirect: '/admin/list-users',
       children:[
         {
@@ -44,7 +45,7 @@ const router = createRouter({
           component: NewUser,
         },
         {
-          path: 'edit/:id',
+          path: 'edit-user/:id',
           component: EditUser,
         },
         {
@@ -60,8 +61,13 @@ const router = createRouter({
           component: EditProduct,
         },
         {
-          path: 'maps',
-          component: Maps,
+          path: 'orders',
+          component: Orders,
+        },
+        {
+          path: 'user-orders/:id',
+          component: UserOrders,
+          props:(route)=>({query: route.query.q})
         },
         {
           path: 'analytics',

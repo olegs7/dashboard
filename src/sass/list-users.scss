@@ -1,7 +1,15 @@
-.new-user__router {
+.new-user {
 	display: flex;
-	cursor: pointer;
+	justify-content: flex-end;
 	margin-bottom: 20px;
+
+	.new-user__new {
+		display: flex;
+		background-color:#15AA3F;
+		padding: 3px 10px;
+		border-radius: 3px;
+		cursor: pointer;
+	}
 }
 
 .card {
@@ -13,9 +21,9 @@
 		thead tr th {
 			font-size: 14px;
 			font-weight: 400;
-			text-align: center;
 			text-transform: uppercase;
 	  	color: #9A9A9A;
+	  	padding: 10px;
 		}
 
 		tbody, td, tfoot, th, thead, tr {
@@ -36,7 +44,6 @@
 			height: 75px;
 			align-items: center;
 			vertical-align: middle;
-			text-align: center;
 			padding: 10px;
 		}
 
@@ -50,8 +57,8 @@
 			padding: 1px 8px;
 			margin-right: 5px;
 
-			.edit {
-				font-size: 16px;
+		.edit {
+			font-size: 16px;
  	}
 }
 

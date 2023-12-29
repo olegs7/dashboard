@@ -1,5 +1,5 @@
 <template>
-	<div class="wrapper-content">
+	<div class="sidebar">
 		 <aside :class="{expanded: expanded}">
     	<div class="logo">
     		<img src="@/assets/logo.svg" alt="logo">
@@ -21,9 +21,9 @@
     			<span class="material-icons">inventory_2</span>
     			<span class="text">Products</span>
     		</router-link>
-    		<router-link class="button" to="/admin/maps">
-    			<span class="material-icons">map</span>
-    			<span class="text">Map</span>
+    		<router-link class="button" to="/admin/orders">
+    			<span class="material-icons">shopping_cart</span>
+    			<span class="text">Orders</span>
     		</router-link>
     		<router-link class="button" to="/admin/analytics">
     			<span class="material-icons">insights</span>
@@ -44,21 +44,15 @@
     			<span class="material-icons">logout</span>
     			<span class="text">Logout</span>
     		</router-link>
-    	</div>
+    	</div>	
 		</div>
+
      </aside>
-
-    <div class="content" :class="{expanded: expanded}">
-    	<TopNavbar/>
-    	<router-view></router-view>
-    </div>
-
 	</div>
 </template>
 
 
 <script setup>
-import TopNavbar from './TopNavbar.vue'	
 import { ref } from 'vue'
 
 const expanded = ref(false)

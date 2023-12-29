@@ -1,10 +1,10 @@
 <template>
 <div class="card">
-	<div class="new-product">		
-		<div class="new-product__router" @click="$router.push('/admin/new-product')">
-			<span class="material-icons">add</span>NEW
+		<div class="new-product" @click="$router.push('/admin/new-product')">
+			  <div class="new-product__new">
+				  <span class="material-icons">add</span>New product
+			  </div>
 		</div>
-	</div>
 
 		<table class="table-products table-hover">
 		<thead>
@@ -43,7 +43,6 @@
 </template>
 
 <script setup>
-import EditProduct from './EditProduct.vue'
 import { ref,onMounted,computed } from 'vue' 
 import axios from 'axios'
 import { useStore } from 'vuex'
@@ -55,10 +54,6 @@ const products = computed(() => store.state.products.products)
 onMounted(()=>{
 	store.dispatch('listProducts')
 })
-
-// function deleteProduct(productId){
-// 	store.dispatch('deleteProduct',productId)
-// }
 
 function deleteProduct(productId){
      	if(confirm('Delete this user?')){
