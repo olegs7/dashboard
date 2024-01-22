@@ -2,7 +2,7 @@
 		<Sidebar/>
 	 <div class="content">
 	 		<TopNavbar/>
-    	<router-view></router-view>
+    	<RouterView/>
    </div>
 </template>
 
@@ -13,6 +13,7 @@ import Sidebar from '@/components/layout/Sidebar.vue'
 
 <style lang="scss" scoped>
 	.content {
+		height: 100vh;
 	  margin-left: 64px;
 	  padding: 15px;	
   }

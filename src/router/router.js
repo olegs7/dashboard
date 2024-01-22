@@ -67,7 +67,6 @@ const router = createRouter({
         {
           path: 'user-orders/:id',
           component: UserOrders,
-          props:(route)=>({query: route.query.q})
         },
         {
           path: 'analytics',

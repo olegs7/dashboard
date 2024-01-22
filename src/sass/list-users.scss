@@ -5,9 +5,9 @@
 
 	.new-user__new {
 		display: flex;
-		background-color:#15AA3F;
 		padding: 3px 10px;
-		border-radius: 3px;
+		border: 1px solid gray;
+		border-radius: 5px;
 		cursor: pointer;
 	}
 }

@@ -90,7 +90,7 @@ function getUser(userId){
       }
 
 function updateUser(){
-        axios.put(`${baseUrl}/users/${userId}`,user.value,{
+        axios.patch(`${baseUrl}/users/${userId}`,user.value,{
            headers: {
               'Content-Type': 'multipart/form-data',
           }

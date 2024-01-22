@@ -11,7 +11,7 @@
     		</div>
     	</div>
 
-   <div class="menu-wrapper">
+   <div class="menu-wrapper" @click="menuClose">
     	<div class="menu-main">
     		<router-link class="button" to="/admin/list-users">
     			<span class="material-icons">account_circle</span>
@@ -59,6 +59,10 @@ const expanded = ref(false)
 
 const toggleMenu = () => {
 	expanded.value = !expanded.value
+}
+
+const menuClose = () => {
+	expanded.value = false
 }
 </script>
 

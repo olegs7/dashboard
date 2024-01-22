@@ -31,7 +31,7 @@
 							</router-link>		
 						</div>							 						
 						<div class="block-delete">
-							<span class="delete" @click='deleteProduct(product._id)'>DELETE</span>						 
+							<span class="delete" @click='deleteProduct(product._id)'>&times;</span>						 
 						</div>										
 					</td>
 				</tr>

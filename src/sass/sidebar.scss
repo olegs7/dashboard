@@ -77,13 +77,14 @@ aside {
 			}
 
 			.text {
-				font-size: 20px;
+				font-size: 18px;
 				color: var(--light);
 				transition: 0.2s ease-out;
 			}
 
 			&:hover {
 				background-color: var(--primary);
+				border-radius: 8px;
 		  }
 
 		  &:focus {

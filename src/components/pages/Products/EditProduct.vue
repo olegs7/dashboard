@@ -86,12 +86,12 @@ function getProduct(productId){
       }
 
 function updateProduct(){
-        axios.put(`${baseUrl}/products/${productId}`,product.value,{
+        axios.patch(`${baseUrl}/products/${productId}`,product.value,{
           headers: {
               'Content-Type': 'multipart/form-data',
           }
         })
-          .then(res => console.log(res))
+          .then(res => res)
             router.push('/admin/list-products') 
           .catch(err => console.log(err))
       }

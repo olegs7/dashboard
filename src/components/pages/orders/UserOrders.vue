@@ -2,7 +2,7 @@
 	 <div class="card">	
 
 	 	<div>
-	 		<h5>USER {{userName}}</h5>
+	 		<h5>USER: {{userName}}</h5>
 	 	</div>
 
 		<table class="table-products table-hover">
@@ -17,12 +17,13 @@
 					<td>{{product.price}}$</td>
 					<td>{{product.description}}</td>
 					<td>
-						<div class="block-edit">
-							 	<span @click.prevent='addProduct(product._id)'>Add</span>										 	
-						</div>							 						
-						<div class="block-delete">
-							<span class="delete" @click.prevent='deleteProduct(product._id)'>DELETE</span>						 
-						</div>										
+						<div>		
+							<span class="btn btn-small btn-danger"
+							 			@click.prevent='dltProduct(product._id)'>&minus;</span>	
+							<span></span> 					
+							<span class="btn btn-small btn-success" 
+							 			@click.prevent='addProduct(product._id)'>&plus;</span>	
+						</div>					 									
 					</td>
 				</tr>
 			</tbody>
@@ -44,27 +45,35 @@ const store = useStore()
 onMounted(()=>{
 	userId = route.params.id
 	userName = route.query.name
+	store.dispatch('listUsers')
 	store.dispatch('listProducts')
+	getOne(userId)
 })
-
-const users = computed(() => store.state.users.users)
-const products = computed(() => store.state.products.products)
 
 let userId = ''
 let userName = ''
 
-function addProduct(productId){
+const users = computed(() => store.state.users.users)
+const products = computed(() => store.state.products.products)
+
+async function addProduct(productId){
 	let formData = new FormData()
 	formData.append('userId',userId)
-		axios.post(`${baseUrl}/user-orders/${productId}`,formData,{
+		let res = await axios.post(`${baseUrl}/user-orders/${productId}`,formData,{
 			headers: {
                 'Content-Type': 'text/html',
             }
 	})
+		alert(res.data.length)
 }
 
-function deleteProduct(productId){
-     axios.delete(`${baseUrl}/user-orders/${productId}?user=${userId}`)    		
+async function dltProduct(productId){
+     let res = await axios.delete(`${baseUrl}/user-orders/${productId}?user=${userId}`)
+     alert(res.data.length)    		
+}
+
+function getOne(userId){
+		 axios.get(`${baseUrl}/user-orders/${userId}`)    
 }
 </script>
 
