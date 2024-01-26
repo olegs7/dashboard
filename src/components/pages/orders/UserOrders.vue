@@ -47,7 +47,6 @@ onMounted(()=>{
 	userName = route.query.name
 	store.dispatch('listUsers')
 	store.dispatch('listProducts')
-	getOne(userId)
 })
 
 let userId = ''
@@ -70,10 +69,6 @@ async function addProduct(productId){
 async function dltProduct(productId){
      let res = await axios.delete(`${baseUrl}/user-orders/${productId}?user=${userId}`)
      alert(res.data.length)    		
-}
-
-function getOne(userId){
-		 axios.get(`${baseUrl}/user-orders/${userId}`)    
 }
 </script>
 

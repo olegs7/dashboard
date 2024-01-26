@@ -2,7 +2,7 @@
 <div class="card">
 		<div class="new-product" @click="$router.push('/admin/new-product')">
 			  <div class="new-product__new">
-				  <span class="material-icons">add</span>New product
+				  <Button class="button" button='new-product'/>
 			  </div>
 		</div>
 
@@ -24,15 +24,12 @@
 					<td>{{product.price}}$</td>
 					<td>{{product.description}}</td>
 					<td>
-						<div class="block-edit">
 							<router-link :to="`/admin/edit-product/${product._id}`">							
-								<span class="edit material-icons">edit</span>
-							  <span>EDIT</span>		
-							</router-link>		
-						</div>							 						
-						<div class="block-delete">
-							<span class="delete" @click='deleteProduct(product._id)'>&times;</span>						 
-						</div>										
+								<Button class="edit button" button='edit'/>
+							</router-link>								 						
+								<Button class="delete button"
+											 @click="deleteProduct(product._id)" 
+												button='&times;'/>									
 					</td>
 				</tr>
 			</tbody>
@@ -46,6 +43,7 @@
 import { ref,onMounted,computed } from 'vue' 
 import axios from 'axios'
 import { useStore } from 'vuex'
+import Button from '@/components/Button.vue'
 import { baseUrl } from '@/config'
 
 const store = useStore()
@@ -60,11 +58,20 @@ function deleteProduct(productId){
      		axios.delete(`${baseUrl}/products/${productId}`)
      			.then(res => res)
      			.catch(err => alert(err))
-     	 }
-     }
-
+  }
+}
 </script>
 
 <style lang="scss" scoped>
+.button {
+	background-color: #3e6ae1;
+}
 
+.edit.button {
+	background-color: gray;
+}
+
+.delete.button {
+	background-color: red;
+}
 </style>

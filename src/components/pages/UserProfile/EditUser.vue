@@ -1,9 +1,15 @@
 <template>
 	<div class="card">
     <div class="title">
+      <span class="arrow-left" @click="$router.push('/admin/list-users')">&larr;</span>
       <h5 slot="header" class="card-title">Edit user</h5>
-      <span class="file material-icons">account_circle</span>
     </div>		
+
+    <div class="img-user" v-if="user.file">
+      <img :src="`${baseUrl}/`+ user.file" alt="img-user">
+      <span class="close" @click="deleteFile">&times;</span>
+    </div>
+
       <form>
        <div class="form-group">
         <label for="file">
@@ -83,11 +89,11 @@ onMounted(()=>{
 function getUser(userId){
         axios.get(`${baseUrl}/users/${userId}`)
           .then(res => {
-            let {name,email,phone} = res.data
-           user.value = {name,email,phone}
+            let {file,name,email,phone} = res.data
+           user.value = {file,name,email,phone}
           })
           .catch(err => console.log(err))
-      }
+}
 
 function updateUser(){
         axios.patch(`${baseUrl}/users/${userId}`,user.value,{
@@ -98,25 +104,50 @@ function updateUser(){
           .then(res => res)
             router.push('/admin/list-users') 
           .catch(err => console.log(err))      
-      }
+}
 
+function deleteFile(){
+  user.value.file = ''
+}
 </script>
 
 <style lang="scss" scoped>
-.title {
-  display: flex;
-  gap: 5px;
-  margin-bottom: 30px;
-}
 .card	{
 	padding: 20px;
-	
-.button-update {
-	margin-top: 10px;
- }
 
- .col-sm-1 {
-    max-width: none;
+  .arrow-left {
+    cursor: pointer
   }
+
+  .title {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 30px;
+  }
+    .button-update {
+      margin-top: 10px;
+    }
+
+    .img-user {
+      position: relative;
+      padding: 10px;
+
+      img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .close {
+        position: absolute;
+        top: 0;
+      }
+    }
+
+    .col-sm-1 {
+      max-width: none;
+  }
+
 }
 </style>

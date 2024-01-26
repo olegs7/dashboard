@@ -2,7 +2,7 @@
 <div class="card">
 		<div class="new-user" @click="$router.push('/admin/new-user')">
 				<div class="new-user__new">
-					<span class="material-icons">add</span>New user
+					<Button class="button" button='new-user'/>
 				</div>		
 		</div>
 
@@ -24,15 +24,12 @@
 					<td>{{user.email}}</td>
 					<td>{{user.phone}}</td>
 					<td>						
-						<div class="block-edit">
 							<router-link :to="`/admin/edit-user/${user._id}`">	
-								<span class="edit material-icons">edit</span>
-							  <span>EDIT</span>		
-						  </router-link>		
-						</div>							 							
-						<div class="block-delete">
-							<span class="delete" @click='deleteUser(user._id)'>&times;</span>						 
-						</div>					
+							  <Button class="edit button" button='edit'/>		
+						  </router-link>							 							
+								<Button class="delete button"
+								 				@click="deleteUser(user._id)" 
+								 				button='&times;'/>				
 					</td>		
 				</tr>
 			</tbody>
@@ -48,6 +45,7 @@
 import { ref,onMounted,computed } from 'vue'
 import axios from 'axios' 
 import { useStore } from 'vuex'
+import Button from '@/components/Button.vue'
 import { baseUrl } from '@/config'
 
 const store = useStore()
@@ -64,9 +62,19 @@ function deleteUser(userId){
      		.catch(err => alert(err))
   }
 }  
-
 </script>
 
 <style lang="scss" scoped>
+.button {
+	background-color: #3e6ae1;
+}
+
+.edit.button {
+	background-color: gray;
+}
+
+.delete.button {
+	background-color: red;
+}
 
 </style>

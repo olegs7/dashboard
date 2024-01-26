@@ -2,14 +2,6 @@
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 20px;
-
-	.new-user__new {
-		display: flex;
-		padding: 3px 10px;
-		border: 1px solid gray;
-		border-radius: 5px;
-		cursor: pointer;
-	}
 }
 
 .card {
@@ -50,30 +42,6 @@
 		tbody td:nth-last-child(2) {
 			padding-right: 3px;
 		}
-
-		.block-edit {
-			background-color: #C8C0C0;
-			border-radius: 3px;
-			padding: 1px 8px;
-			margin-right: 5px;
-
-		.edit {
-			font-size: 16px;
- 	}
-}
-
-		.block-delete {
-			background-color: red;
-			color: white;
-			border-radius: 3px;
-			padding: 1px 8px;
-
-				.delete {
-					font-size: 16px;
-					cursor: pointer;
-					margin: 0;
-				}
-			}
 
 			#img {
 				width: 50px;

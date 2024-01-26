@@ -1,6 +1,7 @@
 <template>
 	<div class="card">
     <div class="title">
+      <span class="arrow-left" @click="$router.push('/admin/list-users')">&larr;</span>
       <h5 slot="header" class="card-title">New user</h5>
     </div>	
     <form>
@@ -101,6 +102,10 @@ function createUser(){
     display: flex;
     gap: 5px;
     margin-bottom: 30px;
+  }
+
+  .arrow-left {
+    cursor: pointer;
   }
 
   .col-sm-1 {

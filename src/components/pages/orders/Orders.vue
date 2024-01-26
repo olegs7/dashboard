@@ -19,7 +19,7 @@
 					<td>						
 						<div class="block-edit">
 							<router-link :to="`/admin/user-orders/${user._id}?name=${user.name}`">	
-							  <span>ORDERS</span>		
+							  <Button class="active" button='orders'/>
 						  </router-link>		
 						</div>							 							
 					</td>		
@@ -37,6 +37,7 @@
 import { ref,onMounted,computed } from 'vue'
 import axios from 'axios' 
 import { useStore } from 'vuex'
+import Button from '@/components/Button.vue'
 import { baseUrl } from '@/config'
 
 const store = useStore()
@@ -48,5 +49,7 @@ onMounted(()=>{
 </script>
 
 <style lang="scss">
-
+.active {
+	background-color: gray;
+}
 </style>

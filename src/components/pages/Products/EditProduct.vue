@@ -1,6 +1,15 @@
 <template>
 	<div class="card">
-		<h5 slot="header" class="card-title">Edit product</h5>
+		<div class="title">
+      <span class="arrow-left" @click="$router.push('/admin/list-products')">&larr;</span>
+      <h5 slot="header" class="card-title">Edit user</h5>
+    </div>    
+
+    <div class="img-product" v-if="product.file">
+      <img :src="`${baseUrl}/`+ product.file" alt="img-product">
+      <span class="close" @click="deleteFile">&times;</span>
+    </div>
+
      <form>
        <div class="form-group">
         <label for="file">
@@ -80,10 +89,10 @@ onMounted(()=>{
 function getProduct(productId){
         axios.get(`${baseUrl}/products/${productId}`)
           .then(res => {
-            let {name,price,description} = res.data
-           product.value = {name,price,description}
+            let {file,name,price,description} = res.data
+           product.value = {file,name,price,description}
         })
-      }
+}
 
 function updateProduct(){
         axios.patch(`${baseUrl}/products/${productId}`,product.value,{
@@ -94,25 +103,50 @@ function updateProduct(){
           .then(res => res)
             router.push('/admin/list-products') 
           .catch(err => console.log(err))
-      }
+}
+
+function deleteFile(){
+  product.value.file = ''
+}      
 </script>
 
 <style lang="scss" scoped>
-.card	{
-	padding: 15px;
+.card {
+  padding: 20px;
 
-    .img {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 10px;
+  .arrow-left {
+    cursor: pointer;
+  }
+
+  .title {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 30px;
+  }
+    .button-update {
+      margin-top: 10px;
+    }
+
+    .img-product {
+      position: relative;
+      padding: 10px;
+
+      img {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .close {
+        position: absolute;
+        top: 0;
+      }
     }
 
     .col-sm-1 {
       max-width: none;
-    }
-	
-.button-update {
-	margin-top: 10px;
- }
+  }
+
 }
 </style>
