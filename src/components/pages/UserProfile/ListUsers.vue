@@ -1,9 +1,16 @@
 <template>
 <div class="card">
-		<div class="new-user" @click="$router.push('/admin/new-user')">
-				<div class="new-user__new">
-					<Button class="button" button='new-user'/>
-				</div>		
+		<div class="new-user">
+			  <div class="new-user__new" @click="$router.push('/admin/new-user')">
+				  <Button class="button" button='new-user'/>
+			  </div>	
+			  <div class="search">
+				  <input class="form-control mr-sm-2" 
+				  			 type="search" 
+				  			 placeholder="Search name" 
+				  			 v-model="input">
+				  <span class="clear" @click="clearSearch">&#10005;</span>
+			  </div>	
 		</div>
 
 		<table class="table-users table-hover">
@@ -19,7 +26,7 @@
 			<tbody>
 				<tr v-for="(user,index) in users">
 					<td>{{index + 1}}.</td>
-					<td><img id="img" :src="`${baseUrl}/`+ user.file" alt="user-img"></td>
+					<td><img id="img" :src="`${baseUrl}/`+ user.file" alt="no img"></td>
 					<td>{{user.name}}</td>
 					<td>{{user.email}}</td>
 					<td>{{user.phone}}</td>
@@ -49,11 +56,22 @@ import Button from '@/components/Button.vue'
 import { baseUrl } from '@/config'
 
 const store = useStore()
-const users = computed(() => store.state.users.users)
+let input = ref('')
 
-onMounted(()=>{
+onMounted(() => {
 	store.dispatch('listUsers')
 })
+
+const users = computed(() => {
+	let listUsers = store.state.users.users
+    return listUsers.filter((elem) => {
+		return elem.name.toLowerCase().includes(input.value.toLowerCase())
+	})
+})
+
+const clearSearch = () => {
+	input.value = ''
+}
 
 function deleteUser(userId){
     if(confirm('Delete this user?')){
@@ -65,16 +83,80 @@ function deleteUser(userId){
 </script>
 
 <style lang="scss" scoped>
-.button {
-	background-color: #3e6ae1;
+.card {
+	padding: 20px;
+
+	.new-user {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 20px;
+	}
+
+	.search {
+		position: relative;
+	}
+
+	.clear {
+		position: absolute;
+		top: 7px;
+		right: 10px;
+		cursor: pointer;
+	}
+
+	.table-users  {
+		padding: 20px;
+
+		thead tr th {
+			font-size: 14px;
+			font-weight: 400;
+			text-transform: uppercase;
+	  	color: #9A9A9A;
+	  	padding: 10px;
+		}
+
+		tbody, td, tfoot, th, thead, tr {
+			border-style: none;
+			box-shadow: none;
+		}
+
+		th, td {
+			border-bottom: 1px solid #dee2e6;
+		}	
+
+		td:last-child {
+			display: flex;
+			justify-content: center;
+		}
+
+		tbody td {
+			height: 75px;
+			align-items: center;
+			vertical-align: middle;
+			padding: 10px;
+		}
+
+		tbody td:nth-last-child(2) {
+			padding-right: 3px;
+		}
+
+			#img {
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+		}
+
+		.edit.button {
+			background-color: gray;
+	}
+
+		.delete.button {
+			background-color: red;
+	}
 }
 
-.edit.button {
-	background-color: gray;
+	.button {
+		background-color: #3e6ae1;
+	}
 }
-
-.delete.button {
-	background-color: red;
-}
-
 </style>

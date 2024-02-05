@@ -68,5 +68,137 @@ const menuClose = () => {
 
 
 <style lang="scss" scoped>
+.sidebar {
+		display: flex;
 
+aside {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	width: calc(2rem + 32px);
+	height: 100%;
+	padding: 1rem;
+	z-index: 10;
+
+	background-color: #1f2937;
+	color: var(--light);
+
+	transition: 0.2s ease-out;
+
+	.logo {
+		margin-bottom: 1rem;
+	}
+
+	.menu {
+		display: flex;
+		justify-content: flex-end;
+
+		position: relative;
+		top: 0;
+		transition: 0.2s ease-out;
+
+		.menu-toggle {
+			transition: 0.2s ease-out;
+			cursor: pointer;
+
+			.material-icons {
+				font-size: 2rem;
+				color: var(--light);
+				transition: 0.2s ease-out;
+			}
+
+			&:hover {
+				.material-icons {
+					color: var(--primary);
+					transform: translateX(0.5rem);
+				}
+			}
+		}
+	}
+
+	.menu-wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+	}
+
+	.button .text {
+		display: none;
+		padding-left: 10px;
+		transition: 0.3s ease-out;
+	}
+
+	.menu-main {
+		margin: 0 -1rem;
+
+		.button {
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+			padding: 0.5rem 1rem;
+			margin-bottom: 10px;
+			transition: 0.2s ease-out;
+
+			.material-icons {
+				font-size: 1.5rem;
+				color: var(--light);
+				transition: 0.2s ease-out;
+			}
+
+			.text {
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--light);
+				transition: 0.2s ease-out;
+			}
+
+			&:hover {
+				background-color: rgb(209, 213, 219);
+				border-radius: 8px;
+					.text{
+						color: #1f2937;
+					}
+					.material-icons{
+						color: #1f2937;
+					}
+		  }
+
+		  &:focus {
+		  	background-color: var(--primary);
+		  }
+		}	
+	}
+		
+	&.expanded {
+		width: 280px;
+
+		.menu {
+		top: -3rem;
+
+		.menu-toggle {
+			transform: rotate(-180deg);
+		}
+	}
+
+		.menu-main {
+			margin: 0;
+		}
+
+		.button .text {
+			display: block;
+			transition: 0.3s ease-out;
+	}
+
+	.button {
+		
+	}
+}
+
+		img {
+			width: 2rem;
+		}
+
+	}
+}
 </style>

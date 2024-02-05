@@ -12,17 +12,19 @@
 			<tbody>
 				<tr v-for="(product,index) in products">
 					<td>{{index + 1}}.</td>
-					<td><img class="img" :src="`${baseUrl}/`+ product.file" alt=""></td>
+					<td><img class="img" :src="`${baseUrl}/`+ product.file" alt="no img"></td>
 					<td>{{product.name}}</td>
 					<td>{{product.price}}$</td>
 					<td>{{product.description}}</td>
 					<td>
 						<div>		
 							<span class="btn btn-small btn-danger"
-							 			@click.prevent='dltProduct(product._id)'>&minus;</span>	
-							<span></span> 					
+							 			@click.prevent='dltProduct(product._id)'>&minus;
+							</span>	
+							<Count/>				
 							<span class="btn btn-small btn-success" 
-							 			@click.prevent='addProduct(product._id)'>&plus;</span>	
+							 			@click.prevent='addProduct(product._id)'>&plus;
+							</span>	
 						</div>					 									
 					</td>
 				</tr>
@@ -38,11 +40,12 @@ import axios from 'axios'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { baseUrl } from '@/config'
+import Count from '@/components/Count.vue'
 
 const route = useRoute()
 const store = useStore()
 
-onMounted(()=>{
+onMounted(() => {
 	userId = route.params.id
 	userName = route.query.name
 	store.dispatch('listUsers')
@@ -72,6 +75,54 @@ async function dltProduct(productId){
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.card {
+	padding: 20px;
 
+	.table-products {
+		padding: 20px;
+
+		thead tr th {
+			font-size: 14px;
+			font-weight: 400;
+			text-transform: uppercase;
+	  	color: #9A9A9A;
+	  	padding: 10px;
+		}
+
+		tbody, td, tfoot, th, thead, tr {
+			border-style: none;
+			box-shadow: none;
+		}
+
+		td:nth-child(5){
+			max-width: 200px;
+		}
+
+		td:last-child {
+			display: flex;
+			justify-content: center;
+		}
+
+		tbody tr {
+			border-bottom: 1px solid #dee2e6;
+		}
+
+		tbody td {
+			height: 75px;
+			align-items: center;
+			vertical-align: middle;
+			padding: 10px;
+		}
+
+		.img {
+			width: 50px;
+			height: 50px;
+		}
+	}
+
+	.button {
+		background-color: #3e6ae1;
+	}
+}
 </style>

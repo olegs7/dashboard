@@ -45,7 +45,8 @@
     <div class="col-sm-6">
       <button type="submit" 
               class="btn btn-primary"
-              @click.prevent='createProduct'>Add product</button>
+              @click.prevent='createProduct'
+              :disabled='!product.name || !product.price || !product.description'>Add product</button>
     </div>
   </div>
     </form>
@@ -54,14 +55,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { baseUrl } from '@/config'
 
 const router = useRouter()
 
-let product = ref({
+let product = reactive({
   file:'',
 	name: '',
 	price: '',
@@ -69,13 +70,12 @@ let product = ref({
 })
 
 function uploadFile(){
-  product.value.file = file.files[0]
+  product.file = file.files[0]
 }
 
 function createProduct(){
-      if(product.value.name != '' && product.value.price != '' && product.value.description != ''){
-         let formData = new FormData()
-        const { file,name,price,description } = product.value
+     let formData = new FormData()
+        const { file,name,price,description } = product
           formData.append('file',file)
           formData.append('name',name)
           formData.append('price',price)
@@ -86,10 +86,9 @@ function createProduct(){
             }
         })
          .then(res => res)
-            product.value = ''
+            product = ''
             router.push('/admin/list-products')
          .catch(err => alert(err))  
-      }
     }
 </script>
 
@@ -101,6 +100,10 @@ function createProduct(){
      display: flex;
      gap: 5px;
      margin-bottom: 30px;
+  }
+
+  input {
+    width: auto;
   }
 
   .arrow-left {

@@ -45,7 +45,8 @@
     <div class="col-sm-6">
       <button type="submit" 
               class="btn btn-primary"
-              @click.prevent='createUser'>Add user</button>
+              @click.prevent='createUser' 
+              :disabled='!user.name || !user.email || !user.phone'>Add user</button>
     </div>
   </div>
     </form>
@@ -54,14 +55,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { baseUrl } from '@/config'
 
 const router = useRouter()
 
-let user = ref({
+let user = reactive({
   file: '',
 	name: '',
 	email: '',
@@ -69,13 +70,12 @@ let user = ref({
 })
 
 function uploadFile(){
-  user.value.file = file.files[0]
+  user.file = file.files[0]
 }
 
-function createUser(){
-      if(user.value.name != '' && user.value.email != '' && user.value.phone != ''){
+function createUser(){     
         let formData = new FormData()
-        const { file,name,email,phone } = user.value
+        const { file,name,email,phone } = user
           formData.append('file',file)
           formData.append('name',name)
           formData.append('email',email)
@@ -86,10 +86,9 @@ function createUser(){
             }
         })
           .then(res => res)
-            user.value = ''
+            user = ''
             router.push('/admin/list-users')
           .catch(err => alert(err)) 
-      }
     }
 
 </script>
@@ -102,6 +101,10 @@ function createUser(){
     display: flex;
     gap: 5px;
     margin-bottom: 30px;
+  }
+
+  input {
+    width: auto;
   }
 
   .arrow-left {
