@@ -4,13 +4,7 @@
 			  <div class="new-user__new" @click="$router.push('/admin/new-user')">
 				  <Button class="button" button='new-user'/>
 			  </div>	
-			  <div class="search">
-				  <input class="form-control mr-sm-2" 
-				  			 type="search" 
-				  			 placeholder="Search name" 
-				  			 v-model="input">
-				  <span class="clear" @click="clearSearch">&#10005;</span>
-			  </div>	
+			  <Search @clearSearch="clearSearch" v-model="input"/>
 		</div>
 
 		<table class="table-users table-hover">
@@ -52,11 +46,16 @@
 import { ref,onMounted,computed } from 'vue'
 import axios from 'axios' 
 import { useStore } from 'vuex'
-import Button from '@/components/Button.vue'
 import { baseUrl } from '@/config'
+import Button from '@/components/Button.vue'
+import Search from '@/components/Search.vue'
 
 const store = useStore()
 let input = ref('')
+
+const clearSearch = () => {
+	input.value = ''
+}
 
 onMounted(() => {
 	store.dispatch('listUsers')
@@ -68,10 +67,6 @@ const users = computed(() => {
 		return elem.name.toLowerCase().includes(input.value.toLowerCase())
 	})
 })
-
-const clearSearch = () => {
-	input.value = ''
-}
 
 function deleteUser(userId){
     if(confirm('Delete this user?')){
@@ -91,17 +86,6 @@ function deleteUser(userId){
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 20px;
-	}
-
-	.search {
-		position: relative;
-	}
-
-	.clear {
-		position: absolute;
-		top: 7px;
-		right: 10px;
-		cursor: pointer;
 	}
 
 	.table-users  {
