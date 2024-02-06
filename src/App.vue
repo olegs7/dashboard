@@ -7,10 +7,11 @@
 </script>
 
 <style lang="scss">
+$background: red;
+
 :root {
   --primary: gray;
   --grey: #64748b;
-  --dark: #141A25;
   --light: #f1f5f9;
 }
   

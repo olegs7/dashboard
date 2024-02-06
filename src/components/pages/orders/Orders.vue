@@ -1,58 +1,75 @@
 <template>
 	<div class="card">
-
-		<table class="table-users table-hover">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>User</th>
-					<th>Name</th>
-					<th>Email</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr v-for="(user,index) in users">
-					<td>{{index + 1}}.</td>
-					<td><img id="img" :src="`${baseUrl}/`+ user.file" alt="no img"></td>
-					<td>{{user.name}}</td>
-					<td>{{user.email}}</td>
-					<td>						
-						<div class="block-edit">
-							<router-link :to="`/admin/user-orders/${user._id}?name=${user.name}`">	
-							  <Button class="active" button='orders'/>
-						  </router-link>		
-						</div>							 							
-					</td>		
-				</tr>
-			</tbody>
-			<div v-if="!store.state.isLoading">Loading...</div>
-	</table>
-
-</div>
-<div>
-</div>
+		<div class="search-wrapper">
+			<Search @clearSearch="clearSearch" v-model="input"/>
+		</div>
+			
+			<table class="table-users table-hover">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>User</th>
+						<th>Name</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(user,index) in users">
+						<td>{{index + 1}}.</td>
+						<td><img id="img" :src="`${baseUrl}/`+ user.file" alt="no img"></td>
+						<td>{{user.name}}</td>
+						<td>{{user.email}}</td>
+						<td>						
+							<div class="block-orders">
+								<router-link :to="`/admin/user-orders/${user._id}?name=${user.name}`">	
+								  <Button class="button-orders" button='orders'/>
+							  </router-link>		
+							</div>							 							
+						</td>		
+					</tr>
+				</tbody>
+				<div v-if="!store.state.isLoading">Loading...</div>
+			</table>
+	</div>
 </template>
 
 <script setup>
 import { ref,onMounted,computed } from 'vue'
 import axios from 'axios' 
 import { useStore } from 'vuex'
-import Button from '@/components/Button.vue'
 import { baseUrl } from '@/config'
+import Button from '@/components/Button.vue'
+import Search from '@/components/Search.vue'
 
 const store = useStore()
-const users = computed(() => store.state.users.users)
+let input = ref('')
 
 onMounted(() => {
 	store.dispatch('listUsers')
 })
+
+const users = computed(() => {
+	let listUsers = store.state.users.users
+    return listUsers.filter((elem) => {
+		return elem.name.toLowerCase().includes(input.value.toLowerCase())
+	})
+})
+
+const clearSearch = () => {
+	input.value = ''
+}
 </script>
 
 <style lang="scss" scoped>
 .card {
 	padding: 20px;
 
-	.table-users  {
+	.search-wrapper {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.table-users {
 		padding: 20px;
 
 		thead tr th {
@@ -92,9 +109,9 @@ onMounted(() => {
 				width: 50px;
 				height: 50px;
 				border-radius: 50%;
-		}
+		  }
 
-		.active {
+		.button-orders {
 			background-color: gray;
 		}
 	}

@@ -1,6 +1,6 @@
 <template>
 	<div class="sidebar">
-		 <aside :class="{expanded: expanded}">
+		<aside :class="{expanded: expanded}">
     	<div class="logo">
     		<img src="@/assets/logo.svg" alt="logo">
     	</div>
@@ -11,7 +11,7 @@
     		</div>
     	</div>
 
-   <div class="menu-wrapper" @click="menuClose">
+   	<div class="menu-wrapper" @click="menuClose">
     	<div class="menu-main">
     		<router-link class="button" to="/admin/list-users">
     			<span class="material-icons">account_circle</span>
@@ -47,7 +47,7 @@
     	</div>	
 		</div>
 
-     </aside>
+    </aside>
 	</div>
 </template>
 
@@ -68,31 +68,33 @@ const menuClose = () => {
 
 
 <style lang="scss" scoped>
+$background: #1f2937;
+$background-hover: #d1d5db;
+
 .sidebar {
 		display: flex;
 
-aside {
-	display: flex;
-	flex-direction: column;
-	position: fixed;
-	width: calc(2rem + 32px);
-	height: 100%;
-	padding: 1rem;
-	z-index: 10;
+	aside {
+		display: flex;
+		flex-direction: column;
+		position: fixed;
+		width: calc(2rem + 32px);
+		height: 100%;
+		padding: 1rem;
+		z-index: 10;
 
-	background-color: #1f2937;
-	color: var(--light);
+		background-color: $background;
+		color: var(--light);
 
-	transition: 0.2s ease-out;
+		transition: 0.2s ease-out;
 
-	.logo {
-		margin-bottom: 1rem;
-	}
+		.logo {
+			margin-bottom: 1rem;
+		}
 
 	.menu {
 		display: flex;
 		justify-content: flex-end;
-
 		position: relative;
 		top: 0;
 		transition: 0.2s ease-out;
@@ -109,7 +111,7 @@ aside {
 
 			&:hover {
 				.material-icons {
-					color: var(--primary);
+					color: $background-hover;
 					transform: translateX(0.5rem);
 				}
 			}
@@ -154,18 +156,21 @@ aside {
 			}
 
 			&:hover {
-				background-color: rgb(209, 213, 219);
+				background-color: $background-hover;
 				border-radius: 8px;
 					.text{
-						color: #1f2937;
+						color: $background;
 					}
 					.material-icons{
-						color: #1f2937;
+						color: $background;
 					}
 		  }
 
 		  &:focus {
-		  	background-color: var(--primary);
+		  	background-color: $background-hover;
+		  		.material-icons{
+						color: $background;
+					}
 		  }
 		}	
 	}
@@ -188,10 +193,6 @@ aside {
 		.button .text {
 			display: block;
 			transition: 0.3s ease-out;
-	}
-
-	.button {
-		
 	}
 }
 

@@ -1,5 +1,5 @@
 <template>
-<div class="card">
+	<div class="card">
 		<div class="new-user">
 			  <div class="new-user__new" @click="$router.push('/admin/new-user')">
 				  <Button class="button" button='new-user'/>
@@ -25,21 +25,19 @@
 					<td>{{user.email}}</td>
 					<td>{{user.phone}}</td>
 					<td>						
-							<router-link :to="`/admin/edit-user/${user._id}`">	
-							  <Button class="edit button" button='edit'/>		
-						  </router-link>							 							
-								<Button class="delete button"
-								 				@click="deleteUser(user._id)" 
-								 				button='&times;'/>				
+						<router-link :to="`/admin/edit-user/${user._id}`">	
+						  <Button class="button-edit" button='edit'/>		
+					  </router-link>							 							
+							<Button class="button-delete"
+							 				@click="deleteUser(user._id)" 
+							 				button='&times;'/>				
 					</td>		
 				</tr>
 			</tbody>
 			<div v-if="!store.state.isLoading">Loading...</div>
 			<h5 v-if="store.state.users.users.length === 0">No users</h5>
-	</table>
-</div>
-<div>
-</div>
+		</table>
+	</div>
 </template>
 
 <script setup>
@@ -53,13 +51,13 @@ import Search from '@/components/Search.vue'
 const store = useStore()
 let input = ref('')
 
-const clearSearch = () => {
-	input.value = ''
-}
-
 onMounted(() => {
 	store.dispatch('listUsers')
 })
+
+const clearSearch = () => {
+	input.value = ''
+}
 
 const users = computed(() => {
 	let listUsers = store.state.users.users
@@ -130,11 +128,11 @@ function deleteUser(userId){
 				border-radius: 50%;
 		}
 
-		.edit.button {
+		.button-edit {
 			background-color: gray;
 	}
 
-		.delete.button {
+		.button-delete {
 			background-color: red;
 	}
 }

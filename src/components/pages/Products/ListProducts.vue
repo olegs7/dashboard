@@ -1,16 +1,10 @@
 <template>
-<div class="card">
+	<div class="card">
 		<div class="new-product">
 			  <div class="new-product__new" @click="$router.push('/admin/new-product')">
 				  <Button class="button" button='new-product'/>
 			  </div>
-			  <div class="search">
-				  <input class="form-control mr-sm-2" 
-							   type="search" 
-							   placeholder="Search name" 
-							   v-model="input">
-					<span class="clear" @click="clearSearch">&#10005;</span>
-				</div>	
+			  <Search @clearSearch="clearSearch" v-model="input"/>
 		</div>
 
 		<table class="table-products table-hover">
@@ -31,12 +25,12 @@
 					<td>{{product.price}}$</td>
 					<td>{{product.description}}</td>
 					<td>
-							<router-link :to="`/admin/edit-product/${product._id}`">							
-								<Button class="edit button" button='edit'/>
-							</router-link>								 						
-								<Button class="delete button"
-											 @click="deleteProduct(product._id)" 
-												button='&times;'/>									
+						<router-link :to="`/admin/edit-product/${product._id}`">							
+							<Button class="button-edit" button='edit'/>
+						</router-link>								 						
+							<Button class="button-delete"
+										 @-click="deleteProduct(product._id)" 
+											button='&times;'/>									
 					</td>
 				</tr>
 			</tbody>
@@ -50,8 +44,9 @@
 import { ref,onMounted,computed } from 'vue' 
 import axios from 'axios'
 import { useStore } from 'vuex'
-import Button from '@/components/Button.vue'
 import { baseUrl } from '@/config'
+import Button from '@/components/Button.vue'
+import Search from '@/components/Search.vue'
 
 const store = useStore()
 let input = ref('')
@@ -60,16 +55,16 @@ onMounted(() => {
 	store.dispatch('listProducts')
 })
 
+const clearSearch = () => {
+	input.value = ''
+}
+
 const products = computed(() => {
 	let listProducts = store.state.products.products
     return listProducts.filter((elem) => {
 		return elem.name.toLowerCase().includes(input.value.toLowerCase())
 	})
 })
-
-const clearSearch = () => {
-	input.value = ''
-}
 
 function deleteProduct(productId){
      	if(confirm('Delete this user?')){
@@ -143,11 +138,11 @@ function deleteProduct(productId){
 			height: 50px;
 		}
 
-		.edit.button {
+		.button-edit {
 			background-color: gray;
 		}
 
-		.delete.button {
+		.button-delete {
 			background-color: red;
 		}
 	}
