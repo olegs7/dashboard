@@ -18,7 +18,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(user,index) in users">
+				<tr v-for="(user,index) in users" :key="user._id">
 					<td>{{index + 1}}.</td>
 					<td><img id="img" :src="`${baseUrl}/`+ user.file" alt="no img"></td>
 					<td>{{user.name}}</td>
@@ -35,7 +35,7 @@
 				</tr>
 			</tbody>
 			<div v-if="!store.state.isLoading">Loading...</div>
-			<h5 v-if="store.state.users.users.length === 0">No users</h5>
+			<h5 v-if="users.length === 0">No users</h5>
 		</table>
 	</div>
 </template>

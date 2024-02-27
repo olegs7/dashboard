@@ -7,8 +7,6 @@
 </script>
 
 <style lang="scss">
-$background: red;
-
 :root {
   --primary: gray;
   --grey: #64748b;

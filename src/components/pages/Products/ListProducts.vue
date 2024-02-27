@@ -18,7 +18,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(product,index) in products">
+				<tr v-for="(product,index) in products" :key="product._id">
 					<td>{{index + 1}}.</td>
 					<td><img class="img" :src="`${baseUrl}/`+ product.file" alt="no img"></td>
 					<td>{{product.name}}</td>
@@ -35,6 +35,7 @@
 				</tr>
 			</tbody>
 			<div v-if="!store.state.isLoading">Loading...</div>
+			<h5 v-if="products.length === 0">No products</h5>
 	</table>
 </div>
 

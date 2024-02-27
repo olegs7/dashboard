@@ -14,14 +14,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(user,index) in users">
+					<tr v-for="(user,index) in users" :key="user._id">
 						<td>{{index + 1}}.</td>
 						<td><img id="img" :src="`${baseUrl}/`+ user.file" alt="no img"></td>
 						<td>{{user.name}}</td>
 						<td>{{user.email}}</td>
 						<td>						
 							<div class="block-orders">
-								<router-link :to="`/admin/user-orders/${user._id}?name=${user.name}`">	
+								<router-link :to="`/admin/user-orders/${user._id}?name=${user.name}&index=${index}`">	
 								  <Button class="button-orders" button='orders'/>
 							  </router-link>		
 							</div>							 							
@@ -29,6 +29,7 @@
 					</tr>
 				</tbody>
 				<div v-if="!store.state.isLoading">Loading...</div>
+				<h5 v-if="users.length === 0">No users</h5>
 			</table>
 	</div>
 </template>

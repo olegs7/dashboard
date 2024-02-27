@@ -1,16 +1,23 @@
 <template>
 	 <div class="card">	
 
-	 	<div>
-	 		<h5>USER: {{userName}}</h5>
+	 	<div class="title">
+	 		<span class="arrow-left" @click="$router.push('/admin/orders')">&larr;</span>
+	 		<h5><strong>ORDER:</strong> {{userName}}</h5>
 	 	</div>
 
 		<table class="table-products table-hover">
-		<thead>
-			
+			<thead>
+					<tr>
+					<th>Id</th>
+					<th>Image</th>
+					<th>Name</th>
+					<th>Price</th>
+					<th>Description</th>
+				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(product,index) in products">
+				<tr v-for="(product,index) in products" :key="product._id">
 					<td>{{index + 1}}.</td>
 					<td><img class="img" :src="`${baseUrl}/`+ product.file" alt="no img"></td>
 					<td>{{product.name}}</td>
@@ -18,11 +25,11 @@
 					<td>{{product.description}}</td>
 					<td>
 						<div>		
-							<span class="btn btn-small btn-danger"
+							<span class="btn btn-small" :class="{disabled: product.counter < 1}"
 							 			@click.prevent='dltProduct(product._id)'>&minus;
-							</span>	
-							<Count/>				
-							<span class="btn btn-small btn-success" 
+							</span>
+							<span class="count">{{product.counter}}</span>
+							<span class="btn btn-small" 
 							 			@click.prevent='addProduct(product._id)'>&plus;
 							</span>	
 						</div>					 									
@@ -40,7 +47,6 @@ import axios from 'axios'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { baseUrl } from '@/config'
-import Count from '@/components/Count.vue'
 
 const route = useRoute()
 const store = useStore()
@@ -48,15 +54,23 @@ const store = useStore()
 onMounted(() => {
 	userId = route.params.id
 	userName = route.query.name
-	store.dispatch('listUsers')
+	userIndex = route.query.index
 	store.dispatch('listProducts')
+	store.dispatch('listUsers')
 })
 
 let userId = ''
 let userName = ''
+let userIndex = ''
 
 const users = computed(() => store.state.users.users)
-const products = computed(() => store.state.products.products)
+
+const products = computed(() => {
+		let prod = store.state.products.products
+				prod.map(el => (el.counter = 0,el))
+			return prod
+	}
+)
 
 async function addProduct(productId){
 	let formData = new FormData()
@@ -66,18 +80,26 @@ async function addProduct(productId){
                 'Content-Type': 'text/html',
             }
 	})
-		alert(res.data.length)
+		let targetProd = products.value.filter(el => el._id === productId)
+		let count = targetProd[0].counter = res.data.length
 }
 
 async function dltProduct(productId){
      let res = await axios.delete(`${baseUrl}/user-orders/${productId}?user=${userId}`)
-     alert(res.data.length)    		
+     let targetProd = products.value.filter(el => el._id === productId)
+		 let count = targetProd[0].counter = res.data.length
 }
 </script>
 
 <style lang="scss" scoped>
 .card {
 	padding: 20px;
+
+	.title {
+		display: flex;
+		gap: 5px;
+		cursor: pointer;
+	}
 
 	.table-products {
 		padding: 20px;
@@ -119,10 +141,18 @@ async function dltProduct(productId){
 			width: 50px;
 			height: 50px;
 		}
+
+		.count {
+			margin: 0px 5px;
+			padding: 5px 15px;
+			border: 1px solid gray;
+			border-radius: 5px;
+		}
 	}
 
-	.button {
-		background-color: #3e6ae1;
+	.btn {
+		padding: 0px;
+		font-size: 25px;
 	}
 }
 </style>

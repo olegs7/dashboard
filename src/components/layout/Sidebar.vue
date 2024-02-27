@@ -71,9 +71,6 @@ const menuClose = () => {
 $background: #1f2937;
 $background-hover: #d1d5db;
 
-.sidebar {
-		display: flex;
-
 	aside {
 		display: flex;
 		flex-direction: column;
@@ -201,5 +198,4 @@ $background-hover: #d1d5db;
 		}
 
 	}
-}
 </style>

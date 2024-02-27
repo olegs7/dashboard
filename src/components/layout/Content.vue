@@ -1,8 +1,8 @@
 <template>
 		<Sidebar/>
 	 <div class="content">
-	 		<TopNavbar/>
-    	<RouterView/>
+	 		<!-- <TopNavbar/> -->
+    <RouterView/>
    </div>
 </template>
 

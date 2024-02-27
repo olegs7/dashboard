@@ -37,14 +37,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref,reactive } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { baseUrl } from '@/config'
 
 const router = useRouter()
 
-let user = ref({
+let user = reactive({
 	email: '',
   password: '',
 })
@@ -53,14 +53,19 @@ let emailError = ref(false)
 let passwordError = ref(false)
 
 function signIn(){ 
-	axios.post(`${baseUrl}/login`,{
-		body: user.value
+	let formData = new FormData()
+	const { email,password } = user
+		formData.append('email',email)
+		formData.append('password',password)
+			axios.post(`${baseUrl}/login`,formData,{
+				headers: {
+          'Content-Type': 'multipart/form-data',
+    }
 	})
 		.then(res => {
-			if(typeof res.data.user !== 'undefined') {
-				router.push('/admin')
-		}
-	})
+			user = ''
+      router.push('/admin')
+		})
 		.catch(err => console.log(err))
 }
 </script>
